@@ -1,0 +1,278 @@
+[
+    {
+        "id": "generations_collection",
+        "name": "generations",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "userId",
+                "name": "userId",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "organizationId",
+                "name": "organizationId",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "specialization",
+                "name": "specialization",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "purpose",
+                "name": "purpose",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "contentType",
+                "name": "contentType",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "numberOfPublications",
+                "name": "numberOfPublications",
+                "type": "number",
+                "required": true,
+                "options": {
+                    "min": 1,
+                    "max": null
+                }
+            },
+            {
+                "id": "context",
+                "name": "context",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "month",
+                "name": "month",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "goals",
+                "name": "goals",
+                "type": "json",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "formatCounts",
+                "name": "formatCounts",
+                "type": "json",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "useHealthCalendar",
+                "name": "useHealthCalendar",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "status",
+                "name": "status",
+                "type": "select",
+                "required": true,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "draft",
+                        "generated",
+                        "completed"
+                    ]
+                }
+            },
+            {
+                "id": "generatedAt",
+                "name": "generatedAt",
+                "type": "date",
+                "required": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            }
+        ],
+        "indexes": [
+            "CREATE INDEX idx_generations_userId ON generations (userId)",
+            "CREATE INDEX idx_generations_status ON generations (status)",
+            "CREATE INDEX idx_generations_created ON generations (created)"
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\" && userId = @request.auth.id",
+        "deleteRule": "@request.auth.id != \"\" && userId = @request.auth.id",
+        "options": {}
+    },
+    {
+        "id": "content_plan_items_collection",
+        "name": "content_plan_items",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "generationId",
+                "name": "generationId",
+                "type": "relation",
+                "required": true,
+                "options": {
+                    "collectionId": "generations_collection",
+                    "cascadeDelete": true,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "title",
+                "name": "title",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "format",
+                "name": "format",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "status",
+                "name": "status",
+                "type": "select",
+                "required": true,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "draft",
+                        "selected",
+                        "generated"
+                    ]
+                }
+            },
+            {
+                "id": "publishDate",
+                "name": "publishDate",
+                "type": "date",
+                "required": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            },
+            {
+                "id": "approved",
+                "name": "approved",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "painPoint",
+                "name": "painPoint",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "cta",
+                "name": "cta",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "contentOutline",
+                "name": "contentOutline",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "metadata",
+                "name": "metadata",
+                "type": "json",
+                "required": false,
+                "options": {}
+            }
+        ],
+        "indexes": [
+            "CREATE INDEX idx_content_plan_items_generationId ON content_plan_items (generationId)",
+            "CREATE INDEX idx_content_plan_items_status ON content_plan_items (status)",
+            "CREATE INDEX idx_content_plan_items_publishDate ON content_plan_items (publishDate)"
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": "@request.auth.id != \"\"",
+        "options": {}
+    }
+]

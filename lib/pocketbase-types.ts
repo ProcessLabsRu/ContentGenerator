@@ -78,15 +78,88 @@ export interface PBUser extends PocketBaseRecord {
 }
 
 /**
+ * Medical Specialization record in PocketBase
+ */
+export interface PBMedicalSpecialization extends PocketBaseRecord {
+    name: string;
+    nameEn?: string;
+    slug: string;
+    icon?: string;
+    description?: string;
+    isActive: boolean;
+    sortOrder: number;
+}
+
+/**
+ * Content Goal record in PocketBase
+ */
+export interface PBContentGoal extends PocketBaseRecord {
+    name: string;
+    nameEn?: string;
+    slug: string;
+    description?: string;
+    defaultWeight: number;
+    isActive: boolean;
+    sortOrder: number;
+}
+
+/**
+ * Instagram Format record in PocketBase
+ */
+export interface PBInstagramFormat extends PocketBaseRecord {
+    name: string;
+    nameEn?: string;
+    slug: string;
+    icon?: string;
+    description?: string;
+    defaultCount: number;
+    isActive: boolean;
+    sortOrder: number;
+}
+
+/**
+ * Month record in PocketBase
+ */
+export interface PBMonth extends PocketBaseRecord {
+    name: string;
+    nameEn?: string;
+    number: number;
+    slug: string;
+    isActive: boolean;
+}
+
+/**
+ * Health Calendar Event record in PocketBase
+ */
+export interface PBHealthCalendarEvent extends PocketBaseRecord {
+    monthId: string;
+    specializationId?: string;
+    eventName: string;
+    eventNameEn?: string;
+    description: string;
+    descriptionEn?: string;
+    color?: string;
+    date?: string;
+    year: number;
+    isActive: boolean;
+}
+
+/**
  * Collection names as constants
  */
 export const COLLECTIONS = {
     GENERATIONS: 'generations',
     CONTENT_PLAN_ITEMS: 'content_plan_items',
     USERS: 'users',
+    MEDICAL_SPECIALIZATIONS: 'medical_specializations',
+    CONTENT_GOALS: 'content_goals',
+    INSTAGRAM_FORMATS: 'instagram_formats',
+    MONTHS: 'months',
+    HEALTH_CALENDAR_EVENTS: 'health_calendar_events',
 } as const;
 
 /**
  * Helper type for collection names
  */
 export type CollectionName = typeof COLLECTIONS[keyof typeof COLLECTIONS];
+

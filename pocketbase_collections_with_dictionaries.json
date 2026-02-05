@@ -1,0 +1,762 @@
+[
+    {
+        "id": "generations_collection",
+        "name": "generations",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "userId",
+                "name": "userId",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "organizationId",
+                "name": "organizationId",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "specialization",
+                "name": "specialization",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "purpose",
+                "name": "purpose",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "contentType",
+                "name": "contentType",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "numberOfPublications",
+                "name": "numberOfPublications",
+                "type": "number",
+                "required": true,
+                "options": {
+                    "min": 1,
+                    "max": null
+                }
+            },
+            {
+                "id": "context",
+                "name": "context",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "month",
+                "name": "month",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "goals",
+                "name": "goals",
+                "type": "json",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "formatCounts",
+                "name": "formatCounts",
+                "type": "json",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "useHealthCalendar",
+                "name": "useHealthCalendar",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "status",
+                "name": "status",
+                "type": "select",
+                "required": true,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "draft",
+                        "generated",
+                        "completed"
+                    ]
+                }
+            },
+            {
+                "id": "generatedAt",
+                "name": "generatedAt",
+                "type": "date",
+                "required": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            }
+        ],
+        "indexes": [
+            "CREATE INDEX idx_generations_userId ON generations (userId)",
+            "CREATE INDEX idx_generations_status ON generations (status)",
+            "CREATE INDEX idx_generations_created ON generations (created)"
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\" && userId = @request.auth.id",
+        "deleteRule": "@request.auth.id != \"\" && userId = @request.auth.id",
+        "options": {}
+    },
+    {
+        "id": "content_plan_items_collection",
+        "name": "content_plan_items",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "generationId",
+                "name": "generationId",
+                "type": "relation",
+                "required": true,
+                "options": {
+                    "collectionId": "generations_collection",
+                    "cascadeDelete": true,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "title",
+                "name": "title",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "format",
+                "name": "format",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "status",
+                "name": "status",
+                "type": "select",
+                "required": true,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "draft",
+                        "selected",
+                        "generated"
+                    ]
+                }
+            },
+            {
+                "id": "publishDate",
+                "name": "publishDate",
+                "type": "date",
+                "required": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            },
+            {
+                "id": "approved",
+                "name": "approved",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "painPoint",
+                "name": "painPoint",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "cta",
+                "name": "cta",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "contentOutline",
+                "name": "contentOutline",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "metadata",
+                "name": "metadata",
+                "type": "json",
+                "required": false,
+                "options": {}
+            }
+        ],
+        "indexes": [
+            "CREATE INDEX idx_content_plan_items_generationId ON content_plan_items (generationId)",
+            "CREATE INDEX idx_content_plan_items_status ON content_plan_items (status)",
+            "CREATE INDEX idx_content_plan_items_publishDate ON content_plan_items (publishDate)"
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": "@request.auth.id != \"\"",
+        "options": {}
+    },
+    {
+        "id": "medical_specializations_collection",
+        "name": "medical_specializations",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "name",
+                "name": "name",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "nameEn",
+                "name": "nameEn",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "slug",
+                "name": "slug",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "icon",
+                "name": "icon",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "description",
+                "name": "description",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "isActive",
+                "name": "isActive",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "sortOrder",
+                "name": "sortOrder",
+                "type": "number",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_medical_specializations_name ON medical_specializations (name)",
+            "CREATE UNIQUE INDEX idx_medical_specializations_slug ON medical_specializations (slug)",
+            "CREATE INDEX idx_medical_specializations_isActive ON medical_specializations (isActive)"
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "options": {}
+    },
+    {
+        "id": "content_goals_collection",
+        "name": "content_goals",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "name",
+                "name": "name",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "nameEn",
+                "name": "nameEn",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "slug",
+                "name": "slug",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "description",
+                "name": "description",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "defaultWeight",
+                "name": "defaultWeight",
+                "type": "number",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "isActive",
+                "name": "isActive",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "sortOrder",
+                "name": "sortOrder",
+                "type": "number",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_content_goals_name ON content_goals (name)",
+            "CREATE UNIQUE INDEX idx_content_goals_slug ON content_goals (slug)",
+            "CREATE INDEX idx_content_goals_isActive ON content_goals (isActive)"
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "options": {}
+    },
+    {
+        "id": "instagram_formats_collection",
+        "name": "instagram_formats",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "name",
+                "name": "name",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "nameEn",
+                "name": "nameEn",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "slug",
+                "name": "slug",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "icon",
+                "name": "icon",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "description",
+                "name": "description",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "defaultCount",
+                "name": "defaultCount",
+                "type": "number",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "isActive",
+                "name": "isActive",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            },
+            {
+                "id": "sortOrder",
+                "name": "sortOrder",
+                "type": "number",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_instagram_formats_name ON instagram_formats (name)",
+            "CREATE UNIQUE INDEX idx_instagram_formats_slug ON instagram_formats (slug)",
+            "CREATE INDEX idx_instagram_formats_isActive ON instagram_formats (isActive)"
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "options": {}
+    },
+    {
+        "id": "months_collection",
+        "name": "months",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "name",
+                "name": "name",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "nameEn",
+                "name": "nameEn",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "number",
+                "name": "number",
+                "type": "number",
+                "required": true,
+                "options": {
+                    "min": 1,
+                    "max": 12
+                }
+            },
+            {
+                "id": "slug",
+                "name": "slug",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "isActive",
+                "name": "isActive",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_months_name ON months (name)",
+            "CREATE UNIQUE INDEX idx_months_number ON months (number)",
+            "CREATE UNIQUE INDEX idx_months_slug ON months (slug)"
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "options": {}
+    },
+    {
+        "id": "health_calendar_events_collection",
+        "name": "health_calendar_events",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "monthId",
+                "name": "monthId",
+                "type": "relation",
+                "required": true,
+                "options": {
+                    "collectionId": "months_collection",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": [
+                        "name"
+                    ]
+                }
+            },
+            {
+                "id": "specializationId",
+                "name": "specializationId",
+                "type": "relation",
+                "required": false,
+                "options": {
+                    "collectionId": "medical_specializations_collection",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": [
+                        "name"
+                    ]
+                }
+            },
+            {
+                "id": "eventName",
+                "name": "eventName",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "eventNameEn",
+                "name": "eventNameEn",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "description",
+                "name": "description",
+                "type": "text",
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "descriptionEn",
+                "name": "descriptionEn",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "color",
+                "name": "color",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "date",
+                "name": "date",
+                "type": "text",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "year",
+                "name": "year",
+                "type": "number",
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "isActive",
+                "name": "isActive",
+                "type": "bool",
+                "required": false,
+                "options": {}
+            }
+        ],
+        "indexes": [
+            "CREATE INDEX idx_health_calendar_events_monthId ON health_calendar_events (monthId)",
+            "CREATE INDEX idx_health_calendar_events_specializationId ON health_calendar_events (specializationId)",
+            "CREATE INDEX idx_health_calendar_events_year ON health_calendar_events (year)",
+            "CREATE INDEX idx_health_calendar_events_isActive ON health_calendar_events (isActive)"
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+        "options": {}
+    }
+]
