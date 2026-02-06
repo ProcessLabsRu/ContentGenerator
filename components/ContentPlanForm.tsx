@@ -26,6 +26,7 @@ export const ContentPlanForm: React.FC<ContentPlanFormProps> = ({
 }) => {
   const { t } = useI18n();
   const [formData, setFormData] = useState<GenerationFormData>({
+    title: "",
     specialization: "",
     purpose: "",
     contentType: "",
@@ -72,6 +73,9 @@ export const ContentPlanForm: React.FC<ContentPlanFormProps> = ({
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof GenerationFormData, string>> = {};
 
+    if (!formData.title?.trim()) {
+      newErrors.title = t("form.errors.titleRequired");
+    }
     if (!formData.specialization) {
       newErrors.specialization = t("form.errors.specializationRequired");
     }
@@ -121,6 +125,15 @@ export const ContentPlanForm: React.FC<ContentPlanFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <Input
+        label={t("form.labels.title")}
+        placeholder={t("app.title")}
+        value={formData.title}
+        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+        error={errors.title}
+        required
+      />
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Select
           label={t("form.labels.specialization")}

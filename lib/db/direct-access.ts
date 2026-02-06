@@ -16,6 +16,7 @@ const padDatePart = (value: number) => value.toString().padStart(2, '0');
 function mapRowToGeneration(row: any): Generation {
   return {
     id: row.id,
+    title: row.title || '',
     created_at: row.created_at.toISOString(),
     updated_at: row.updated_at?.toISOString() || row.created_at.toISOString(),
     specialization: row.specialization,
@@ -65,10 +66,11 @@ export async function createGeneration(
   return withTransaction(async (client: PoolClient) => {
     // Insert generation
     const generationResult = await client.query(
-      `INSERT INTO generations (specialization, purpose, content_type, number_of_publications, context, metadata)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO generations (title, specialization, purpose, content_type, number_of_publications, context, metadata)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING *`,
       [
+        data.title,
         data.specialization,
         data.purpose,
         data.content_type,

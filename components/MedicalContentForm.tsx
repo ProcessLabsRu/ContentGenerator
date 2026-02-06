@@ -52,6 +52,7 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
     };
 
     const [formData, setFormData] = useState<MedicalContentFormData>({
+        title: "",
         specialization: "",
         month: getNextMonth(),
         goals: [],
@@ -171,6 +172,7 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
     // Reset form
     const handleReset = () => {
         setFormData({
+            title: "",
             specialization: "",
             month: getNextMonth(),
             goals: [],
@@ -192,6 +194,9 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
     const validate = (): boolean => {
         const newErrors: Partial<Record<keyof MedicalContentFormData, string>> = {};
 
+        if (!formData.title?.trim()) {
+            newErrors.title = t("medical.error.titleRequired");
+        }
         if (!formData.specialization) {
             newErrors.specialization = t("medical.error.specializationRequired");
         }
@@ -209,6 +214,7 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
     // Check if generate button should be enabled
     const isGenerateEnabled = (): boolean => {
         return !!(
+            formData.title?.trim() &&
             formData.specialization &&
             formData.month &&
             formData.goals.length > 0
@@ -290,6 +296,18 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
                 <p className="text-sm text-gray-600 mt-1">
                     {t("medical.form.poweredBy")}
                 </p>
+            </div>
+
+            {/* Plan Title */}
+            <div className="space-y-1">
+                <Input
+                    label={t("medical.form.planTitle")}
+                    placeholder={t("medical.app.title")}
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    error={errors.title}
+                    required
+                />
             </div>
 
             {/* Main Configuration */}

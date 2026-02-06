@@ -31,6 +31,7 @@ export const GenerationModal: React.FC<GenerationModalProps> = ({
     try {
       // Transform to API format
       const generationInput: GenerationInput = {
+        title: formData.title,
         specialization: formData.specialization,
         purpose: formData.purpose,
         content_type: formData.contentType,
@@ -59,7 +60,7 @@ export const GenerationModal: React.FC<GenerationModalProps> = ({
 
       const created = getApiDataOrThrow(result);
       onClose();
-      
+
       if (onSuccess) {
         onSuccess(created.id);
       }

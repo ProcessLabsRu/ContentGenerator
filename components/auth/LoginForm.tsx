@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from './AuthProvider';
+import { useI18n } from '@/lib/i18n';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export function LoginForm() {
     const { login } = useAuth();
+    const { t } = useI18n();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -23,7 +25,7 @@ export function LoginForm() {
         try {
             await login(email, password);
         } catch (err: any) {
-            setError(err.message || 'Ошибка авторизации. Проверьте email и пароль.');
+            setError(err.message || t('auth.login.error'));
         } finally {
             setLoading(false);
         }
@@ -33,9 +35,9 @@ export function LoginForm() {
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
             <Card className="w-full max-w-md">
                 <CardHeader>
-                    <CardTitle>Вход в систему</CardTitle>
+                    <CardTitle>{t('auth.login.title')}</CardTitle>
                     <CardDescription>
-                        Введите ваш email и пароль для доступа к приложению
+                        {t('auth.login.subtitle')}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -47,7 +49,7 @@ export function LoginForm() {
                         )}
 
                         <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">{t('auth.login.email')}</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -60,7 +62,7 @@ export function LoginForm() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password">Пароль</Label>
+                            <Label htmlFor="password">{t('auth.login.password')}</Label>
                             <Input
                                 id="password"
                                 type="password"
@@ -73,11 +75,11 @@ export function LoginForm() {
                         </div>
 
                         <Button type="submit" className="w-full" disabled={loading}>
-                            {loading ? 'Вход...' : 'Войти'}
+                            {loading ? t('auth.login.buttonLoading') : t('auth.login.button')}
                         </Button>
 
                         <div className="text-sm text-gray-500 mt-4">
-                            <p>Тестовые учетные данные:</p>
+                            <p>{t('auth.login.testCredentials')}</p>
                             <p className="font-mono text-xs mt-1">test@example.com / Test123!</p>
                         </div>
                     </form>

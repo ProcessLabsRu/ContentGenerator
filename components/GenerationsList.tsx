@@ -24,10 +24,10 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
   const loadGenerations = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await fetchGenerations();
-      
+
       if (isApiError(result)) {
         setError(result.error.message);
         setGenerations([]);
@@ -112,14 +112,13 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
         <div
           key={generation.id}
           onClick={() => onSelect(generation)}
-          className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-            selectedId === generation.id
+          className={`p-4 border rounded-lg cursor-pointer transition-colors ${selectedId === generation.id
               ? "border-blue-500 bg-blue-50"
               : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-          }`}
+            }`}
         >
           <div className="text-sm font-medium text-gray-900 mb-1">
-            {generation.specialization} • {generation.purpose}
+            {generation.title || `${generation.specialization} • ${generation.purpose}`}
           </div>
           <div className="text-xs text-gray-500 mb-2">
             {formatDate(generation.created_at)}

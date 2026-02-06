@@ -80,6 +80,7 @@ class NocoDBClient {
   private mapNocoDBRecordToGeneration(record: NocoDBRecord): Generation {
     return {
       id: record.Id,
+      title: record.Title || '',
       created_at: record.CreatedAt || new Date().toISOString(),
       updated_at: record.UpdatedAt || record.CreatedAt || new Date().toISOString(),
       specialization: record.Specialization || '',
@@ -114,6 +115,7 @@ class NocoDBClient {
 
   private mapGenerationToNocoDBRecord(data: GenerationInput): Record<string, any> {
     return {
+      Title: data.title,
       Specialization: data.specialization,
       Purpose: data.purpose,
       ContentType: data.content_type,

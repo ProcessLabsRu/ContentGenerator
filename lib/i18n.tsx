@@ -89,6 +89,7 @@ const translations = {
     "generationModal.createError": "Failed to create generation: {error}",
     "generationModal.createErrorFallback": "Failed to create generation",
     "generationModal.genericError": "Error: {error}",
+    "form.labels.title": "Plan title",
     "form.labels.specialization": "Specialization",
     "form.labels.purpose": "Purpose of publication",
     "form.labels.contentType": "Type of content",
@@ -98,6 +99,7 @@ const translations = {
       "Enter any additional context, specific requirements, or wishes for your content plan...",
     "form.submit.generate": "Generate content plan",
     "form.submit.generating": "Generating...",
+    "form.errors.titleRequired": "Plan title is required",
     "form.errors.specializationRequired": "Specialization is required",
     "form.errors.purposeRequired": "Purpose of publication is required",
     "form.errors.contentTypeRequired": "Type of content is required",
@@ -128,6 +130,16 @@ const translations = {
     "ui.close": "Close",
     "ui.closeModal": "Close modal",
 
+    // Auth
+    "auth.login.title": "Login",
+    "auth.login.subtitle": "Enter your email and password to access the app",
+    "auth.login.email": "Email",
+    "auth.login.password": "Password",
+    "auth.login.button": "Login",
+    "auth.login.buttonLoading": "Logging in...",
+    "auth.login.error": "Authentication error. Check your email and password.",
+    "auth.login.testCredentials": "Test credentials:",
+
     // Medical Content Generator
     "medical.app.title": "Medical Content Generator",
     "medical.app.subtitle": "Smart planning for healthcare professionals on Instagram",
@@ -140,6 +152,7 @@ const translations = {
     "medical.form.poweredBy": "Powered by Google Gemini 3 Pro",
 
     // Form Fields
+    "medical.form.planTitle": "Plan Title",
     "medical.form.specialization": "Specialization",
     "medical.form.month": "Month",
     "medical.form.goals": "Goals",
@@ -220,6 +233,7 @@ const translations = {
     "medical.context.default": "Add specific information about your practice, differentials, target audience...",
 
     // Errors
+    "medical.error.titleRequired": "Plan title is required",
     "medical.error.specializationRequired": "Specialization is required",
     "medical.error.monthRequired": "Month is required",
     "medical.error.goalsRequired": "At least one goal is required",
@@ -305,6 +319,7 @@ const translations = {
     "generationModal.createError": "Falha ao criar geracao: {error}",
     "generationModal.createErrorFallback": "Falha ao criar geracao",
     "generationModal.genericError": "Erro: {error}",
+    "form.labels.title": "Título do plano",
     "form.labels.specialization": "Especializacao",
     "form.labels.purpose": "Objetivo da publicacao",
     "form.labels.contentType": "Tipo de conteudo",
@@ -314,6 +329,7 @@ const translations = {
       "Informe qualquer contexto adicional, requisitos especificos ou desejos para seu plano de conteudo...",
     "form.submit.generate": "Gerar plano de conteudo",
     "form.submit.generating": "Gerando...",
+    "form.errors.titleRequired": "O título do plano é obrigatório",
     "form.errors.specializationRequired": "Especializacao obrigatoria",
     "form.errors.purposeRequired": "Objetivo da publicacao obrigatorio",
     "form.errors.contentTypeRequired": "Tipo de conteudo obrigatorio",
@@ -344,6 +360,16 @@ const translations = {
     "ui.close": "Fechar",
     "ui.closeModal": "Fechar modal",
 
+    // Auth
+    "auth.login.title": "Entrar no sistema",
+    "auth.login.subtitle": "Digite seu e-mail e senha para acessar o aplicativo",
+    "auth.login.email": "E-mail",
+    "auth.login.password": "Senha",
+    "auth.login.button": "Entrar",
+    "auth.login.buttonLoading": "Entrando...",
+    "auth.login.error": "Erro de autenticação. Verifique seu e-mail e senha.",
+    "auth.login.testCredentials": "Credenciais de teste:",
+
     // Medical Content Generator
     "medical.app.title": "Gerador de Conteúdo Médico",
     "medical.app.subtitle": "Planejamento inteligente para profissionais de saúde no Instagram",
@@ -356,6 +382,7 @@ const translations = {
     "medical.form.poweredBy": "Powered by Google Gemini 3 Pro",
 
     // Form Fields
+    "medical.form.planTitle": "Título do Plano",
     "medical.form.specialization": "Especialização",
     "medical.form.month": "Mês",
     "medical.form.goals": "Objetivos",
@@ -436,6 +463,7 @@ const translations = {
     "medical.context.default": "Adicione informações específicas sobre sua prática, diferenciais, público-alvo...",
 
     // Errors
+    "medical.error.titleRequired": "Nome do plano é obrigatório",
     "medical.error.specializationRequired": "Especialização é obrigatória",
     "medical.error.monthRequired": "Mês é obrigatório",
     "medical.error.goalsRequired": "Pelo menos um objetivo é obrigatório",

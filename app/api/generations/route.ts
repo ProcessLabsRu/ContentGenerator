@@ -13,7 +13,7 @@ import {
 export async function GET() {
   try {
     const generations = await getAllGenerations();
-    
+
     return NextResponse.json<ApiResponse<typeof generations>>({
       data: generations,
     });
@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     const generationInput: GenerationInput = {
+      title: body.generation.title || '',
       specialization: body.generation.specialization,
       purpose: body.generation.purpose,
       content_type: body.generation.contentType || body.generation.content_type,

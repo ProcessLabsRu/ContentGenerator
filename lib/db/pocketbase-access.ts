@@ -24,6 +24,7 @@ import { PBGeneration, PBContentPlanItem } from '../pocketbase-types';
 function pbGenerationToGeneration(pbGen: PBGeneration): Generation {
     return {
         id: pbGen.id,
+        title: pbGen.title,
         specialization: pbGen.specialization,
         purpose: pbGen.purpose || '',
         content_type: pbGen.contentType || '',
@@ -58,8 +59,8 @@ export async function createGeneration(
     items: ContentPlanItemInput[]
 ): Promise<GenerationWithItems> {
     // Создаем генерацию
-    // Создаем генерацию
     const pbGeneration = await pbCreateGeneration({
+        title: data.title,
         specialization: data.specialization,
         purpose: data.purpose,
         contentType: data.content_type,

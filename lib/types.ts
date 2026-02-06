@@ -40,11 +40,12 @@ export interface ContentPlanItemUpdate {
 }
 
 export interface GenerationFormData {
+  title: string;
   specialization: string;
   purpose: string;
   contentType: string;
   numberOfPublications: number;
-  context: string;
+  context?: string;
 }
 
 // Medical Specializations for Instagram Content
@@ -102,6 +103,7 @@ export interface FormatCounts {
 
 // Medical Content Plan Form Data
 export interface MedicalContentFormData {
+  title: string;
   specialization: MedicalSpecialization | "";
   month: MonthOption | "";
   goals: ContentGoal[];
@@ -127,7 +129,8 @@ export type SpecializationOption =
   | "Education"
   | "Finance"
   | "Technology"
-  | "Real Estate";
+  | "Real Estate"
+  | "Direct Access/PostgreSQL";
 
 export type PurposeOption =
   | "Lead Generation"
@@ -151,6 +154,7 @@ export type ContentTypeOption =
 // Database types
 export interface Generation {
   id: string;
+  title: string;
   created_at: string;
   updated_at: string;
   specialization: string;
@@ -164,6 +168,7 @@ export interface Generation {
 
 // Input type for creating a generation (without id, created_at)
 export interface GenerationInput {
+  title: string;
   specialization: string;
   purpose: string;
   content_type: string;

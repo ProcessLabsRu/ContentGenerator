@@ -35,6 +35,7 @@ async function createCollections() {
             type: 'base',
             schema: [
                 { name: 'userId', type: 'text', required: false },
+                { name: 'title', type: 'text', required: true },
                 { name: 'organizationId', type: 'text', required: false },
                 { name: 'specialization', type: 'text', required: true },
                 { name: 'purpose', type: 'text', required: false },

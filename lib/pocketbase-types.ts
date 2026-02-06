@@ -24,6 +24,7 @@ export interface PBGeneration extends PocketBaseRecord {
     organizationId?: string;
 
     // Generation metadata
+    title: string;
     specialization: string;
     purpose?: string;
     contentType?: string;
