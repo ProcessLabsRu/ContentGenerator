@@ -28,9 +28,32 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
 }) => {
     const { t } = useI18n();
 
+    // Month options
+    const monthOptions: { value: MonthOption; label: string }[] = [
+        { value: "Janeiro", label: t("medical.month.january") },
+        { value: "Fevereiro", label: t("medical.month.february") },
+        { value: "Março", label: t("medical.month.march") },
+        { value: "Abril", label: t("medical.month.april") },
+        { value: "Maio", label: t("medical.month.may") },
+        { value: "Junho", label: t("medical.month.june") },
+        { value: "Julho", label: t("medical.month.july") },
+        { value: "Agosto", label: t("medical.month.august") },
+        { value: "Setembro", label: t("medical.month.september") },
+        { value: "Outubro", label: t("medical.month.october") },
+        { value: "Novembro", label: t("medical.month.november") },
+        { value: "Dezembro", label: t("medical.month.december") },
+    ];
+
+    // Get next month as default
+    const getNextMonth = (): MonthOption => {
+        const now = new Date();
+        const nextMonthIndex = (now.getMonth() + 1) % 12; // 0-11, next month
+        return monthOptions[nextMonthIndex].value;
+    };
+
     const [formData, setFormData] = useState<MedicalContentFormData>({
         specialization: "",
-        month: "",
+        month: getNextMonth(),
         goals: [],
         formatCounts: {
             reels: 0,
@@ -59,22 +82,6 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
         { value: "Oftalmologia", label: t("medical.specialization.ophthalmology") },
         { value: "Endocrinologia", label: t("medical.specialization.endocrinology") },
         { value: "Nutrologia/Nutrição", label: t("medical.specialization.nutrology") },
-    ];
-
-    // Month options
-    const monthOptions: { value: MonthOption; label: string }[] = [
-        { value: "Janeiro", label: t("medical.month.january") },
-        { value: "Fevereiro", label: t("medical.month.february") },
-        { value: "Março", label: t("medical.month.march") },
-        { value: "Abril", label: t("medical.month.april") },
-        { value: "Maio", label: t("medical.month.may") },
-        { value: "Junho", label: t("medical.month.june") },
-        { value: "Julho", label: t("medical.month.july") },
-        { value: "Agosto", label: t("medical.month.august") },
-        { value: "Setembro", label: t("medical.month.september") },
-        { value: "Outubro", label: t("medical.month.october") },
-        { value: "Novembro", label: t("medical.month.november") },
-        { value: "Dezembro", label: t("medical.month.december") },
     ];
 
     // Goal options
@@ -165,7 +172,7 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
     const handleReset = () => {
         setFormData({
             specialization: "",
-            month: "",
+            month: getNextMonth(),
             goals: [],
             formatCounts: {
                 reels: 0,
@@ -412,24 +419,28 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
                     </Button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {(Object.keys(formData.formatCounts) as Array<keyof FormatCounts>).map((format) => (
-                        <div key={format} className="p-4 border border-gray-200 rounded-lg">
-                            <div className="flex items-center justify-between mb-2">
-                                <label className="text-sm font-medium text-gray-700">
-                                    {getFormatLabel(format)}
-                                </label>
-                                <Input
+                        <div key={format} className="p-3 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors bg-white">
+                            <div className="flex items-start justify-between gap-3 mb-2">
+                                <div className="flex-1 min-w-0">
+                                    <label className="text-sm font-medium text-gray-900 block leading-tight">
+                                        {getFormatLabel(format)}
+                                    </label>
+                                </div>
+                                <input
                                     type="number"
                                     min={0}
-                                    value={formData.formatCounts[format].toString()}
+                                    max={99}
+                                    value={formData.formatCounts[format]}
                                     onChange={(e) =>
                                         handleFormatCountChange(format, parseInt(e.target.value) || 0)
                                     }
-                                    className="w-20 text-center"
+                                    className="border border-gray-300 rounded px-2 py-1 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    style={{ width: '48px', flexShrink: 0 }}
                                 />
                             </div>
-                            <p className="text-xs text-gray-500">{getFormatDescription(format)}</p>
+                            <p className="text-xs text-gray-500 leading-tight">{getFormatDescription(format)}</p>
                         </div>
                     ))}
                 </div>
