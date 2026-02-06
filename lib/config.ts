@@ -159,3 +159,43 @@ export function getValidatedConfig(): DatabaseConfig {
   return cachedConfig;
 }
 
+// LLM Configuration
+export type LLMProvider = 'openai' | 'gemini';
+
+export interface LLMConfig {
+  provider: LLMProvider;
+  openai: {
+    apiKey?: string;
+    model: string;
+  };
+  gemini: {
+    apiKey?: string;
+    model: string;
+  };
+}
+
+export function getLLMConfig(): LLMConfig {
+  const provider = (process.env.LLM_PROVIDER as LLMProvider) || 'gemini';
+
+  return {
+    provider,
+    openai: {
+      apiKey: process.env.OPENAI_API_KEY,
+      model: process.env.OPENAI_MODEL || 'gpt-4-turbo-preview',
+    },
+    gemini: {
+      apiKey: process.env.GEMINI_API_KEY,
+      model: process.env.GEMINI_MODEL || 'gemini-1.5-pro',
+    },
+  };
+}
+
+export function validateLLMConfig(config: LLMConfig): void {
+  if (config.provider === 'openai' && !config.openai.apiKey) {
+    throw new Error('OPENAI_API_KEY is required when using OpenAI provider');
+  }
+  if (config.provider === 'gemini' && !config.gemini.apiKey) {
+    throw new Error('GEMINI_API_KEY is required when using Gemini provider');
+  }
+}
+
