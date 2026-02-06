@@ -2,7 +2,7 @@
  * Типы для работы с LLM провайдерами
  */
 
-export type LLMProvider = 'openai' | 'gemini';
+export type LLMProvider = 'openai' | 'gemini' | 'deepseek';
 
 export interface LLMMessage {
     role: 'system' | 'user' | 'assistant';
@@ -37,6 +37,10 @@ export interface LLMConfig {
         model: string;
     };
     gemini: {
+        apiKey?: string;
+        model: string;
+    };
+    deepseek: {
         apiKey?: string;
         model: string;
     };

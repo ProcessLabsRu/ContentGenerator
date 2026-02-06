@@ -1,6 +1,7 @@
 import { LLMClient, LLMProvider } from './types';
 import { OpenAIClient } from './openai-client';
 import { GeminiClient } from './gemini-client';
+import { DeepSeekClient } from './deepseek-client';
 
 /**
  * Создает клиент для выбранного LLM провайдера
@@ -28,6 +29,15 @@ export function createLLMClient(): LLMClient {
             return new GeminiClient(apiKey, model);
         }
 
+        case 'deepseek': {
+            const apiKey = process.env.DEEPSEEK_API_KEY;
+            if (!apiKey) {
+                throw new Error('DEEPSEEK_API_KEY is not set in environment variables');
+            }
+            const model = process.env.DEEPSEEK_MODEL || 'deepseek-chat';
+            return new DeepSeekClient(apiKey, model);
+        }
+
         default:
             throw new Error(`Unsupported LLM provider: ${provider}`);
     }
@@ -49,6 +59,8 @@ export function isProviderConfigured(provider: LLMProvider): boolean {
             return !!process.env.OPENAI_API_KEY;
         case 'gemini':
             return !!process.env.GEMINI_API_KEY;
+        case 'deepseek':
+            return !!process.env.DEEPSEEK_API_KEY;
         default:
             return false;
     }
@@ -58,3 +70,4 @@ export function isProviderConfigured(provider: LLMProvider): boolean {
 export * from './types';
 export { OpenAIClient } from './openai-client';
 export { GeminiClient } from './gemini-client';
+export { DeepSeekClient } from './deepseek-client';

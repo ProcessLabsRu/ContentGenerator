@@ -14,10 +14,12 @@ export async function GET() {
             availableProviders: {
                 openai: isProviderConfigured('openai'),
                 gemini: isProviderConfigured('gemini'),
+                deepseek: isProviderConfigured('deepseek'),
             },
             models: {
                 openai: config.openai.model,
                 gemini: config.gemini.model,
+                deepseek: config.deepseek.model,
             },
         });
     } catch (error) {

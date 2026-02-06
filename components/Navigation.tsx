@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Locale, useI18n } from "@/lib/i18n";
 import { ConnectionIndicator } from "./ConnectionIndicator";
+import { LLMConnectionIndicator } from "./LLMConnectionIndicator";
 import { UserMenu } from "./auth/UserMenu";
 
 export const Navigation: React.FC = () => {
@@ -27,6 +28,7 @@ export const Navigation: React.FC = () => {
           <div className="flex items-center">
             <div className="flex items-center gap-4">
               <ConnectionIndicator />
+              <LLMConnectionIndicator />
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="language-select"

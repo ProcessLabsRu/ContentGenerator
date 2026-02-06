@@ -160,7 +160,7 @@ export function getValidatedConfig(): DatabaseConfig {
 }
 
 // LLM Configuration
-export type LLMProvider = 'openai' | 'gemini';
+export type LLMProvider = 'openai' | 'gemini' | 'deepseek';
 
 export interface LLMConfig {
   provider: LLMProvider;
@@ -169,6 +169,10 @@ export interface LLMConfig {
     model: string;
   };
   gemini: {
+    apiKey?: string;
+    model: string;
+  };
+  deepseek: {
     apiKey?: string;
     model: string;
   };
@@ -187,6 +191,10 @@ export function getLLMConfig(): LLMConfig {
       apiKey: process.env.GEMINI_API_KEY,
       model: process.env.GEMINI_MODEL || 'gemini-1.5-pro',
     },
+    deepseek: {
+      apiKey: process.env.DEEPSEEK_API_KEY,
+      model: process.env.DEEPSEEK_MODEL || 'deepseek-chat',
+    },
   };
 }
 
@@ -196,6 +204,9 @@ export function validateLLMConfig(config: LLMConfig): void {
   }
   if (config.provider === 'gemini' && !config.gemini.apiKey) {
     throw new Error('GEMINI_API_KEY is required when using Gemini provider');
+  }
+  if (config.provider === 'deepseek' && !config.deepseek.apiKey) {
+    throw new Error('DEEPSEEK_API_KEY is required when using DeepSeek provider');
   }
 }
 
