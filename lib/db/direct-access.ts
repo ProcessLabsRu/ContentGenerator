@@ -17,6 +17,7 @@ function mapRowToGeneration(row: any): Generation {
   return {
     id: row.id,
     created_at: row.created_at.toISOString(),
+    updated_at: row.updated_at?.toISOString() || row.created_at.toISOString(),
     specialization: row.specialization,
     purpose: row.purpose,
     content_type: row.content_type,
@@ -32,8 +33,8 @@ function mapRowToContentPlanItem(row: any): ContentPlanItem {
     row.publish_date instanceof Date
       ? row.publish_date
       : row.publish_date
-      ? new Date(row.publish_date)
-      : null;
+        ? new Date(row.publish_date)
+        : null;
   const hasValidPublishDate =
     publishDate && !Number.isNaN(publishDate.getTime());
 
@@ -48,8 +49,8 @@ function mapRowToContentPlanItem(row: any): ContentPlanItem {
     status: row.status as ContentPlanStatus,
     publish_date: hasValidPublishDate
       ? `${publishDate.getFullYear()}-${padDatePart(
-          publishDate.getMonth() + 1
-        )}-${padDatePart(publishDate.getDate())}`
+        publishDate.getMonth() + 1
+      )}-${padDatePart(publishDate.getDate())}`
       : null,
     is_approved: row.is_approved ?? false,
     created_at: row.created_at?.toISOString(),
@@ -83,7 +84,7 @@ export async function createGeneration(
     if (items.length > 0) {
       const itemPlaceholders: string[] = [];
       const itemValues: any[] = [];
-      
+
       items.forEach((item, index) => {
         const baseIndex = index * 9;
         itemPlaceholders.push(
@@ -127,7 +128,7 @@ export async function createGeneration(
 export async function getGenerationById(id: string): Promise<Generation | null> {
   const pool = getPool();
   const result = await pool.query('SELECT * FROM generations WHERE id = $1', [id]);
-  
+
   if (result.rows.length === 0) {
     return null;
   }
@@ -140,7 +141,7 @@ export async function getAllGenerations(): Promise<Generation[]> {
   const result = await pool.query(
     'SELECT * FROM generations ORDER BY created_at DESC'
   );
-  
+
   return result.rows.map(mapRowToGeneration);
 }
 
@@ -202,7 +203,7 @@ export async function updateGeneration(
 export async function deleteGeneration(id: string): Promise<void> {
   const pool = getPool();
   const result = await pool.query('DELETE FROM generations WHERE id = $1', [id]);
-  
+
   if (result.rowCount === 0) {
     throw new Error(`Generation with id ${id} not found`);
   }
@@ -214,7 +215,7 @@ export async function getItemsByGenerationId(generationId: string): Promise<Cont
     'SELECT * FROM content_plan_items WHERE generation_id = $1 ORDER BY created_at',
     [generationId]
   );
-  
+
   return result.rows.map(mapRowToContentPlanItem);
 }
 

@@ -35,7 +35,7 @@ class NocoDBClient {
 
   constructor() {
     const config = getValidatedConfig();
-    
+
     if (config.provider !== 'nocodb') {
       throw new Error('NocoDB client can only be used when DATABASE_PROVIDER=nocodb');
     }
@@ -47,7 +47,7 @@ class NocoDBClient {
     this.apiUrl = config.nocodb.apiUrl.replace(/\/$/, ''); // Remove trailing slash
     this.apiToken = config.nocodb.apiToken;
     this.baseId = config.nocodb.baseId;
-    
+
     // Table IDs - these should be configured via env or determined via API
     // For now, assuming table names match our schema
     this.generationsTableId = process.env.NOCODB_GENERATIONS_TABLE_ID || 'Generations';
@@ -59,7 +59,7 @@ class NocoDBClient {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.apiUrl}/tables/${this.baseId}/${endpoint}`;
-    
+
     const response = await fetch(url, {
       ...options,
       headers: {
@@ -81,6 +81,7 @@ class NocoDBClient {
     return {
       id: record.Id,
       created_at: record.CreatedAt || new Date().toISOString(),
+      updated_at: record.UpdatedAt || record.CreatedAt || new Date().toISOString(),
       specialization: record.Specialization || '',
       purpose: record.Purpose || '',
       content_type: record.ContentType || '',
@@ -154,7 +155,7 @@ class NocoDBClient {
 
     // Create items
     const createdItems: ContentPlanItem[] = [];
-    
+
     for (const item of items) {
       const itemRecord = this.mapItemToNocoDBRecord(item, generation.id);
       const itemResponse = await this.request<NocoDBRecord>(
@@ -191,7 +192,7 @@ class NocoDBClient {
     const response = await this.request<NocoDBResponse<NocoDBRecord>>(
       `${this.generationsTableId}?sort=-CreatedAt`
     );
-    
+
     return response.list.map((record) => this.mapNocoDBRecordToGeneration(record));
   }
 
@@ -200,7 +201,7 @@ class NocoDBClient {
     data: Partial<GenerationInput>
   ): Promise<Generation> {
     const updateRecord: Record<string, any> = {};
-    
+
     if (data.specialization !== undefined) updateRecord.Specialization = data.specialization;
     if (data.purpose !== undefined) updateRecord.Purpose = data.purpose;
     if (data.content_type !== undefined) updateRecord.ContentType = data.content_type;
@@ -232,7 +233,7 @@ class NocoDBClient {
     const response = await this.request<NocoDBResponse<NocoDBRecord>>(
       `${this.itemsTableId}?where=(GenerationId,eq,${generationId})&sort=CreatedAt`
     );
-    
+
     return response.list.map((record) => this.mapNocoDBRecordToContentPlanItem(record));
   }
 

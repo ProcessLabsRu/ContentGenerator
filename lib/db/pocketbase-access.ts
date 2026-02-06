@@ -58,6 +58,7 @@ export async function createGeneration(
     items: ContentPlanItemInput[]
 ): Promise<GenerationWithItems> {
     // Создаем генерацию
+    // Создаем генерацию
     const pbGeneration = await pbCreateGeneration({
         specialization: data.specialization,
         purpose: data.purpose,
@@ -69,7 +70,7 @@ export async function createGeneration(
         formatCounts: {},
         useHealthCalendar: false,
         additionalContext: data.context || '',
-    });
+    } as any);
 
     // Создаем элементы контент-плана
     const pbItems = await batchCreateContentPlanItems(
@@ -82,7 +83,7 @@ export async function createGeneration(
             contentOutline: item.content_outline,
             cta: item.cta,
             publishDate: item.publish_date || undefined,
-            approved: item.is_approved,
+            approved: !!item.is_approved,
         }))
     );
 
