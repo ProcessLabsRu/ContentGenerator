@@ -1,42 +1,39 @@
-export type ContentPlanStatus = "draft" | "selected" | "generated";
+export type ContentPlanStatus = "draft" | "approved" | "generated";
 
 export interface ContentPlanItem {
   id: string;
   generation_id?: string; // Optional for backward compatibility
-  format: string;
+  format: 'Reels' | 'Carrossel' | 'Post Estático' | 'Stories' | 'Live/Collab';
   title: string;
   pain_point: string;
   content_outline: string;
   cta: string;
   status: ContentPlanStatus;
   publish_date?: string | null;
-  is_approved?: boolean;
   created_at?: string;
   updated_at?: string;
 }
 
 // Input type for creating content plan items (without id, timestamps)
 export interface ContentPlanItemInput {
-  format: string;
+  format: 'Reels' | 'Carrossel' | 'Post Estático' | 'Stories' | 'Live/Collab';
   title: string;
   pain_point: string;
   content_outline: string;
   cta: string;
   status?: ContentPlanStatus;
   publish_date?: string | null;
-  is_approved?: boolean;
 }
 
 export interface ContentPlanItemUpdate {
   id: string;
-  format?: string;
+  format?: 'Reels' | 'Carrossel' | 'Post Estático' | 'Stories' | 'Live/Collab';
   title?: string;
   pain_point?: string;
   content_outline?: string;
   cta?: string;
   status?: ContentPlanStatus;
   publish_date?: string | null;
-  is_approved?: boolean;
 }
 
 export interface GenerationFormData {

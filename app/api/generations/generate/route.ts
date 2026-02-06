@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
             specialization: formData.specialization,
             purpose: formData.goals.join(', '),
             content_type: 'Instagram Content Plan',
-            number_of_publications: formData.totalPublications,
+            number_of_publications: formData.totalPublications || 1,
             context: formData.additionalContext,
             metadata: {
                 month: formData.month,

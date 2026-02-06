@@ -25,7 +25,7 @@ export const PostsList: React.FC<PostsListProps> = ({ generation }) => {
   const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"table" | "calendar">("table");
   const [approvalFilter, setApprovalFilter] = useState<
-    "all" | "approved" | "disapproved"
+    "all" | "approved" | "draft"
   >("all");
   const [showSettings, setShowSettings] = useState(false);
   const [activeItem, setActiveItem] = useState<ContentPlanItem | null>(null);
@@ -34,7 +34,6 @@ export const PostsList: React.FC<PostsListProps> = ({ generation }) => {
     format: true,
     status: true,
     publishDate: true,
-    approved: true,
     painPoint: false,
     cta: false,
     contentOutline: false,
@@ -99,8 +98,8 @@ export const PostsList: React.FC<PostsListProps> = ({ generation }) => {
     // Update items optimistically
     const updatedItems = items.map((item) =>
       selectedIds.includes(item.id)
-        ? { ...item, status: "selected" as ContentPlanStatus }
-        : item.status === "selected"
+        ? { ...item, status: "approved" as ContentPlanStatus }
+        : item.status === "approved"
           ? { ...item, status: "draft" as ContentPlanStatus }
           : item
     );
@@ -141,7 +140,6 @@ export const PostsList: React.FC<PostsListProps> = ({ generation }) => {
       format: updatedItem.format,
       status: updatedItem.status,
       publish_date: updatedItem.publish_date ?? null,
-      is_approved: updatedItem.is_approved ?? false,
       pain_point: updatedItem.pain_point,
       content_outline: updatedItem.content_outline,
       cta: updatedItem.cta,
@@ -206,8 +204,8 @@ export const PostsList: React.FC<PostsListProps> = ({ generation }) => {
       ? items
       : items.filter((item) =>
         approvalFilter === "approved"
-          ? Boolean(item.is_approved)
-          : !item.is_approved
+          ? item.status === "approved"
+          : item.status === "draft"
       );
 
   return (
@@ -259,16 +257,14 @@ export const PostsList: React.FC<PostsListProps> = ({ generation }) => {
                 value={approvalFilter}
                 onChange={(e) =>
                   setApprovalFilter(
-                    e.target.value as "all" | "approved" | "disapproved"
+                    e.target.value as "all" | "approved" | "draft"
                   )
                 }
                 className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
                 <option value="all">{t("table.filter.all")}</option>
-                <option value="approved">{t("table.filter.approved")}</option>
-                <option value="disapproved">
-                  {t("table.filter.disapproved")}
-                </option>
+                <option value="approved">{t("status.approved")}</option>
+                <option value="draft">{t("status.draft")}</option>
               </select>
             </div>
           )}
@@ -329,20 +325,6 @@ export const PostsList: React.FC<PostsListProps> = ({ generation }) => {
                   className="h-4 w-4 rounded border-gray-300 text-blue-600"
                 />
                 {t("settings.publishDate")}
-              </label>
-              <label className="flex items-center gap-2 text-sm text-gray-700 mt-2">
-                <input
-                  type="checkbox"
-                  checked={tableColumns.approved}
-                  onChange={(e) =>
-                    setTableColumns((prev) => ({
-                      ...prev,
-                      approved: e.target.checked,
-                    }))
-                  }
-                  className="h-4 w-4 rounded border-gray-300 text-blue-600"
-                />
-                {t("settings.approved")}
               </label>
               <label className="flex items-center gap-2 text-sm text-gray-700 mt-2">
                 <input

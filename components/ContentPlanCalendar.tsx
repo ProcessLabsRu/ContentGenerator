@@ -80,12 +80,12 @@ export const ContentPlanCalendar: React.FC<ContentPlanCalendarProps> = ({
     { bg: string; text: string }
   > = {
     draft: { bg: "bg-gray-100", text: "text-gray-700" },
-    selected: { bg: "bg-blue-100", text: "text-blue-700" },
+    approved: { bg: "bg-blue-100", text: "text-blue-700" },
     generated: { bg: "bg-green-100", text: "text-green-700" },
   };
   const statusLabelKey = {
     draft: "status.draft",
-    selected: "status.selected",
+    approved: "status.approved",
     generated: "status.generated",
   } as const;
 
@@ -93,7 +93,7 @@ export const ContentPlanCalendar: React.FC<ContentPlanCalendarProps> = ({
     const map = new Map<string, ContentPlanItem[]>();
     const withoutDate: ContentPlanItem[] = [];
 
-    items.filter((item) => item.is_approved).forEach((item) => {
+    items.filter((item) => item.status === "approved").forEach((item) => {
       const parsed = parsePublishDate(item.publish_date);
       if (!parsed) {
         withoutDate.push(item);
@@ -160,6 +160,10 @@ export const ContentPlanCalendar: React.FC<ContentPlanCalendarProps> = ({
 
   return (
     <div className="space-y-4">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800 flex items-center gap-2">
+        <span className="text-lg">ℹ️</span>
+        {t("calendar.onlyApproved")}
+      </div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-900">
@@ -177,22 +181,20 @@ export const ContentPlanCalendar: React.FC<ContentPlanCalendarProps> = ({
             <button
               type="button"
               onClick={() => setView("month")}
-              className={`px-3 py-1 text-sm font-medium rounded-md ${
-                view === "month"
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
+              className={`px-3 py-1 text-sm font-medium rounded-md ${view === "month"
+                ? "bg-blue-600 text-white"
+                : "text-gray-600 hover:text-gray-900"
+                }`}
             >
               {t("calendar.view.month")}
             </button>
             <button
               type="button"
               onClick={() => setView("week")}
-              className={`px-3 py-1 text-sm font-medium rounded-md ${
-                view === "week"
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
+              className={`px-3 py-1 text-sm font-medium rounded-md ${view === "week"
+                ? "bg-blue-600 text-white"
+                : "text-gray-600 hover:text-gray-900"
+                }`}
             >
               {t("calendar.view.week")}
             </button>
@@ -242,9 +244,8 @@ export const ContentPlanCalendar: React.FC<ContentPlanCalendarProps> = ({
           return (
             <div
               key={key}
-              className={`min-h-[110px] bg-white p-2 ${
-                isCurrentMonth ? "" : "text-gray-400 bg-gray-50"
-              }`}
+              className={`min-h-[110px] bg-white p-2 ${isCurrentMonth ? "" : "text-gray-400 bg-gray-50"
+                }`}
             >
               <div className="flex items-center justify-between text-xs font-semibold">
                 <span>{date.getDate()}</span>
@@ -258,9 +259,8 @@ export const ContentPlanCalendar: React.FC<ContentPlanCalendarProps> = ({
                 {dayItems.slice(0, 3).map((item) => (
                   <div
                     key={item.id}
-                    className={`rounded-md bg-blue-50 px-2 py-1 text-[11px] text-blue-900 leading-snug ${
-                      onItemClick ? "cursor-pointer hover:bg-blue-100" : ""
-                    }`}
+                    className={`rounded-md bg-blue-50 px-2 py-1 text-[11px] text-blue-900 leading-snug ${onItemClick ? "cursor-pointer hover:bg-blue-100" : ""
+                      }`}
                     title={item.title}
                     role={onItemClick ? "button" : undefined}
                     onClick={() => onItemClick?.(item)}
@@ -315,9 +315,8 @@ export const ContentPlanCalendar: React.FC<ContentPlanCalendarProps> = ({
             {undatedItems.map((item) => (
               <div
                 key={item.id}
-                className={`rounded-lg border border-gray-200 bg-white p-3 text-sm text-gray-700 ${
-                  onItemClick ? "cursor-pointer hover:border-blue-300" : ""
-                }`}
+                className={`rounded-lg border border-gray-200 bg-white p-3 text-sm text-gray-700 ${onItemClick ? "cursor-pointer hover:border-blue-300" : ""
+                  }`}
                 role={onItemClick ? "button" : undefined}
                 onClick={() => onItemClick?.(item)}
               >

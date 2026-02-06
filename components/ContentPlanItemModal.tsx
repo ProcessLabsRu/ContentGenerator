@@ -6,6 +6,7 @@ import { Input } from "./ui/Input";
 import { Textarea } from "./ui/Textarea";
 import { Select } from "./ui/Select";
 import { Button } from "./ui/Button";
+import { ConfirmationModal } from "./ui/ConfirmationModal";
 import { ContentPlanItem, ContentPlanStatus } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 
@@ -28,21 +29,29 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
   // ... (rest of the component state stays the same)
   const statusOptions: { value: ContentPlanStatus; label: string }[] = [
     { value: "draft", label: t("status.draft") },
-    { value: "selected", label: t("status.selected") },
+    { value: "approved", label: t("status.approved") },
     { value: "generated", label: t("status.generated") },
+  ];
+
+  const formatOptions = [
+    { value: "Reels", label: t("medical.format.reels") },
+    { value: "Carrossel", label: t("medical.format.carousel") },
+    { value: "Post Estático", label: t("medical.format.staticPost") },
+    { value: "Stories", label: t("medical.format.stories") },
+    { value: "Live/Collab", label: t("medical.format.liveCollab") },
   ];
   const [formState, setFormState] = useState({
     title: "",
-    format: "",
+    format: "" as 'Reels' | 'Carrossel' | 'Post Estático' | 'Stories' | 'Live/Collab',
     status: "draft" as ContentPlanStatus,
     publish_date: "",
-    is_approved: false,
     pain_point: "",
     content_outline: "",
     cta: "",
   });
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     if (!item) return;
@@ -51,7 +60,6 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
       format: item.format || "",
       status: item.status,
       publish_date: item.publish_date ? item.publish_date.slice(0, 10) : "",
-      is_approved: Boolean(item.is_approved),
       pain_point: item.pain_point || "",
       content_outline: item.content_outline || "",
       cta: item.cta || "",
@@ -68,7 +76,6 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
         format: formState.format,
         status: formState.status,
         publish_date: formState.publish_date || null,
-        is_approved: formState.is_approved,
         pain_point: formState.pain_point,
         content_outline: formState.content_outline,
         cta: formState.cta,
@@ -79,10 +86,11 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
   };
 
   const handleDelete = async () => {
-    if (!item || !window.confirm(t("posts.delete.confirm"))) return;
+    if (!item) return;
     setIsDeleting(true);
     try {
       await onDelete(item.id);
+      setShowDeleteConfirm(false);
     } finally {
       setIsDeleting(false);
     }
@@ -103,11 +111,12 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
             setFormState((prev) => ({ ...prev, title: e.target.value }))
           }
         />
-        <Input
+        <Select
           label={t("modal.labels.format")}
+          options={formatOptions}
           value={formState.format}
-          onChange={(e) =>
-            setFormState((prev) => ({ ...prev, format: e.target.value }))
+          onValueChange={(value) =>
+            setFormState((prev) => ({ ...prev, format: value as any }))
           }
         />
         <Select
@@ -132,20 +141,6 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
             }))
           }
         />
-        <label className="flex items-center gap-2 text-sm text-gray-700">
-          <input
-            type="checkbox"
-            checked={formState.is_approved}
-            onChange={(e) =>
-              setFormState((prev) => ({
-                ...prev,
-                is_approved: e.target.checked,
-              }))
-            }
-            className="h-4 w-4 rounded border-gray-300 text-blue-600"
-          />
-          {t("modal.approved")}
-        </label>
         <Textarea
           label={t("modal.labels.painPoint")}
           value={formState.pain_point}
@@ -176,7 +171,7 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
         <div className="flex justify-between items-center pt-2">
           <Button
             variant="ghost"
-            onClick={handleDelete}
+            onClick={() => setShowDeleteConfirm(true)}
             className="text-red-500 hover:text-red-700 hover:bg-red-50"
             disabled={isDeleting || isSaving}
           >
@@ -196,6 +191,15 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
           </div>
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        onConfirm={handleDelete}
+        title={t("ui.delete")}
+        message={t("posts.delete.confirm")}
+        confirmLabel={t("ui.delete")}
+        isLoading={isDeleting}
+      />
     </Modal>
   );
 };

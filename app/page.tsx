@@ -30,6 +30,12 @@ export default function Home() {
     setRefreshTrigger((prev) => prev + 1);
   }, []);
 
+  const handleDeleteGeneration = (id: string) => {
+    if (selectedGeneration?.id === id) {
+      setSelectedGeneration(null);
+    }
+  };
+
   return (
     <ProtectedRoute>
       <div className="h-[calc(100vh-4rem)] flex flex-col">
@@ -61,6 +67,7 @@ export default function Home() {
               <GenerationsList
                 selectedId={selectedGeneration?.id || null}
                 onSelect={handleSelectGeneration}
+                onDelete={handleDeleteGeneration}
                 refreshTrigger={refreshTrigger}
               />
             </div>

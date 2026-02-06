@@ -1,4 +1,3 @@
-import { getValidatedConfig } from '../config';
 import {
   Generation,
   GenerationInput,
@@ -8,12 +7,6 @@ import {
   ContentPlanStatus,
   ContentPlanItemUpdate,
 } from '../types';
-
-// Import direct access functions
-import * as directAccess from './direct-access';
-
-// Import NocoDB client functions
-import * as nocodbAccess from './nocodb-client';
 
 // Import PocketBase client functions
 import * as pocketbaseAccess from './pocketbase-access';
@@ -27,98 +20,7 @@ export interface DatabaseAdapter {
   getItemsByGenerationId(generationId: string): Promise<ContentPlanItem[]>;
   updateItemStatus(itemId: string, status: ContentPlanStatus): Promise<ContentPlanItem>;
   updateItem(itemId: string, data: ContentPlanItemUpdate): Promise<ContentPlanItem>;
-}
-
-class DirectAccessAdapter implements DatabaseAdapter {
-  async createGeneration(
-    data: GenerationInput,
-    items: ContentPlanItemInput[]
-  ): Promise<GenerationWithItems> {
-    return directAccess.createGeneration(data, items);
-  }
-
-  async getGenerationById(id: string): Promise<Generation | null> {
-    return directAccess.getGenerationById(id);
-  }
-
-  async getAllGenerations(): Promise<Generation[]> {
-    return directAccess.getAllGenerations();
-  }
-
-  async updateGeneration(
-    id: string,
-    data: Partial<GenerationInput>
-  ): Promise<Generation> {
-    return directAccess.updateGeneration(id, data);
-  }
-
-  async deleteGeneration(id: string): Promise<void> {
-    return directAccess.deleteGeneration(id);
-  }
-
-  async getItemsByGenerationId(generationId: string): Promise<ContentPlanItem[]> {
-    return directAccess.getItemsByGenerationId(generationId);
-  }
-
-  async updateItemStatus(
-    itemId: string,
-    status: ContentPlanStatus
-  ): Promise<ContentPlanItem> {
-    return directAccess.updateItemStatus(itemId, status);
-  }
-
-  async updateItem(
-    itemId: string,
-    data: ContentPlanItemUpdate
-  ): Promise<ContentPlanItem> {
-    return directAccess.updateItem(itemId, data);
-  }
-}
-
-class NocoDBAdapter implements DatabaseAdapter {
-  async createGeneration(
-    data: GenerationInput,
-    items: ContentPlanItemInput[]
-  ): Promise<GenerationWithItems> {
-    return nocodbAccess.createGeneration(data, items);
-  }
-
-  async getGenerationById(id: string): Promise<Generation | null> {
-    return nocodbAccess.getGenerationById(id);
-  }
-
-  async getAllGenerations(): Promise<Generation[]> {
-    return nocodbAccess.getAllGenerations();
-  }
-
-  async updateGeneration(
-    id: string,
-    data: Partial<GenerationInput>
-  ): Promise<Generation> {
-    return nocodbAccess.updateGeneration(id, data);
-  }
-
-  async deleteGeneration(id: string): Promise<void> {
-    return nocodbAccess.deleteGeneration(id);
-  }
-
-  async getItemsByGenerationId(generationId: string): Promise<ContentPlanItem[]> {
-    return nocodbAccess.getItemsByGenerationId(generationId);
-  }
-
-  async updateItemStatus(
-    itemId: string,
-    status: ContentPlanStatus
-  ): Promise<ContentPlanItem> {
-    return nocodbAccess.updateItemStatus(itemId, status);
-  }
-
-  async updateItem(
-    itemId: string,
-    data: ContentPlanItemUpdate
-  ): Promise<ContentPlanItem> {
-    return nocodbAccess.updateItem(itemId, data);
-  }
+  deleteItem(itemId: string): Promise<void>;
 }
 
 class PocketBaseAdapter implements DatabaseAdapter {
@@ -165,6 +67,10 @@ class PocketBaseAdapter implements DatabaseAdapter {
   ): Promise<ContentPlanItem> {
     return pocketbaseAccess.updateItem(itemId, data);
   }
+
+  async deleteItem(itemId: string): Promise<void> {
+    return pocketbaseAccess.deleteItem(itemId);
+  }
 }
 
 // Singleton adapter instance
@@ -172,15 +78,7 @@ let adapter: DatabaseAdapter | null = null;
 
 export function getDatabaseAdapter(): DatabaseAdapter {
   if (!adapter) {
-    const config = getValidatedConfig();
-
-    if (config.provider === 'nocodb') {
-      adapter = new NocoDBAdapter();
-    } else if (config.provider === 'pocketbase') {
-      adapter = new PocketBaseAdapter();
-    } else {
-      adapter = new DirectAccessAdapter();
-    }
+    adapter = new PocketBaseAdapter();
   }
 
   return adapter;
@@ -230,3 +128,10 @@ export async function updateItem(
 ): Promise<ContentPlanItem> {
   return getDatabaseAdapter().updateItem(itemId, data);
 }
+
+export async function deleteItem(itemId: string): Promise<void> {
+  return getDatabaseAdapter().deleteItem(itemId);
+}
+
+// Alias for compatibility with some routes
+export const deleteContentPlanItem = deleteItem;

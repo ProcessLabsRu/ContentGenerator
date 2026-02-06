@@ -22,13 +22,18 @@ export async function createGeneration(
 
     const record = await pb.collection(COLLECTIONS.GENERATIONS).create<PBGeneration>({
         userId,
+        title: (formData as any).title || formData.specialization || 'Content Plan',
         specialization: formData.specialization,
         month: formData.month,
         goals: formData.goals,
-        formatCounts: JSON.stringify(formData.formatCounts),
+        formatCounts: formData.formatCounts,
         useHealthCalendar: formData.useHealthCalendar,
         context: formData.additionalContext,
-        numberOfPublications: Object.values(formData.formatCounts).reduce((sum, val) => sum + val, 0),
+        numberOfPublications: (formData as any).numberOfPublications
+            ? Number((formData as any).numberOfPublications)
+            : (typeof formData.formatCounts === 'object' && formData.formatCounts !== null
+                ? Object.values(formData.formatCounts).reduce((sum, val) => sum + (Number(val) || 0), 0)
+                : 1),
         status: 'draft',
     });
 

@@ -64,12 +64,12 @@ export async function createGeneration(
         specialization: data.specialization,
         purpose: data.purpose,
         contentType: data.content_type,
-        numberOfPublications: data.number_of_publications,
+        numberOfPublications: Number(data.number_of_publications),
         context: data.context || '',
-        month: '',
-        goals: [],
-        formatCounts: {},
-        useHealthCalendar: false,
+        month: (data.metadata as any)?.month || '',
+        goals: (data.metadata as any)?.goals || [],
+        formatCounts: (data.metadata as any)?.formatCounts || {},
+        useHealthCalendar: !!(data.metadata as any)?.useHealthCalendar,
         additionalContext: data.context || '',
     } as any);
 
@@ -159,4 +159,8 @@ export async function updateItem(
         approved: data.is_approved,
     });
     return pbItemToItem(pbItem);
+}
+
+export async function deleteItem(itemId: string): Promise<void> {
+    await deleteContentPlanItem(itemId);
 }

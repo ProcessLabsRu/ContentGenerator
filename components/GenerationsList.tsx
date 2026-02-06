@@ -5,21 +5,26 @@ import { Generation } from "@/lib/types";
 import { fetchGenerations, deleteGeneration, isApiError } from "@/lib/api-client";
 import { useI18n } from "@/lib/i18n";
 import { Trash2 } from "lucide-react";
+import { ConfirmationModal } from "./ui/ConfirmationModal";
 
 interface GenerationsListProps {
   selectedId?: string | null;
   onSelect: (generation: Generation) => void;
+  onDelete?: (id: string) => void;
   refreshTrigger?: number;
 }
 
 export const GenerationsList: React.FC<GenerationsListProps> = ({
   selectedId,
   onSelect,
+  onDelete,
   refreshTrigger,
 }) => {
   const [generations, setGenerations] = useState<Generation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { t, intlLocale } = useI18n();
 
   const loadGenerations = async () => {
@@ -45,20 +50,29 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
 
   const handleDelete = async (e: ReactMouseEvent, id: string) => {
     e.stopPropagation();
+    setDeleteConfirmId(id);
+  };
 
-    if (!window.confirm(t("generations.delete.confirm"))) {
-      return;
-    }
+  const confirmDelete = async () => {
+    if (!deleteConfirmId) return;
 
+    setIsDeleting(true);
     try {
-      const result = await deleteGeneration(id);
+      const result = await deleteGeneration(deleteConfirmId);
       if (isApiError(result)) {
         alert(result.error.message);
       } else {
+        const deletedId = deleteConfirmId;
+        setDeleteConfirmId(null);
+        if (onDelete) {
+          onDelete(deletedId);
+        }
         loadGenerations();
       }
     } catch (err: any) {
       alert(err.message || "Failed to delete generation");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -167,6 +181,16 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
           </div>
         </div>
       ))}
+
+      <ConfirmationModal
+        isOpen={Boolean(deleteConfirmId)}
+        onClose={() => setDeleteConfirmId(null)}
+        onConfirm={confirmDelete}
+        title={t("ui.delete")}
+        message={t("generations.delete.confirm")}
+        confirmLabel={t("ui.delete")}
+        isLoading={isDeleting}
+      />
     </div>
   );
 };

@@ -33,8 +33,8 @@ export interface PBGeneration extends PocketBaseRecord {
 
     // Medical-specific fields
     month?: string;
-    goals?: string[]; // JSON array of goals
-    formatCounts?: string; // JSON object with format counts
+    goals?: any[]; // JSON array of goals
+    formatCounts?: Record<string, number>; // JSON object with format counts
     useHealthCalendar?: boolean;
 
     // Status
@@ -54,10 +54,9 @@ export interface PBContentPlanItem extends PocketBaseRecord {
 
     // Content details
     title: string;
-    format: string;
-    status: 'draft' | 'selected' | 'generated';
+    format: 'Reels' | 'Carrossel' | 'Post Estático' | 'Stories' | 'Live/Collab';
+    status: 'draft' | 'approved' | 'generated';
     publishDate?: string;
-    approved: boolean;
 
     // Content structure
     painPoint?: string;
@@ -65,7 +64,7 @@ export interface PBContentPlanItem extends PocketBaseRecord {
     contentOutline?: string;
 
     // Additional metadata
-    metadata?: string; // JSON object for additional data
+    metadata?: any; // JSON object for additional data
 }
 
 /**

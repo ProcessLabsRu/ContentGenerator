@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
+
 import { getCurrentProvider, isProviderConfigured, createLLMClient } from '@/lib/llm';
 
-/**
- * Health check endpoint for LLM connection
- * GET /api/health/llm
- */
 export async function GET() {
     try {
         const currentProvider = getCurrentProvider();
@@ -21,11 +18,8 @@ export async function GET() {
             );
         }
 
-        // Пробуем создать клиент и выполнить тестовый запрос
         try {
             const client = createLLMClient();
-
-            // Выполняем минимальный тестовый запрос для проверки подключения
             await client.generate([{ role: 'user', content: 'test' }]);
 
             return NextResponse.json({

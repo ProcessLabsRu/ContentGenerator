@@ -12,7 +12,6 @@ interface ContentPlanTableProps {
     format?: boolean;
     status?: boolean;
     publishDate?: boolean;
-    approved?: boolean;
     painPoint?: boolean;
     cta?: boolean;
     contentOutline?: boolean;
@@ -24,7 +23,7 @@ const statusColors: Record<
   { bg: string; text: string }
 > = {
   draft: { bg: "bg-gray-100", text: "text-gray-800" },
-  selected: { bg: "bg-blue-100", text: "text-blue-800" },
+  approved: { bg: "bg-blue-100", text: "text-blue-800" },
   generated: { bg: "bg-green-100", text: "text-green-800" },
 };
 
@@ -57,7 +56,7 @@ export const ContentPlanTable: React.FC<ContentPlanTableProps> = ({
   const { t, intlLocale } = useI18n();
   const statusLabelKey = {
     draft: "status.draft",
-    selected: "status.selected",
+    approved: "status.approved",
     generated: "status.generated",
   } as const;
   const formatPublishDate = (value?: string | null) => {
@@ -81,7 +80,6 @@ export const ContentPlanTable: React.FC<ContentPlanTableProps> = ({
   const showFormat = visibleColumns?.format ?? true;
   const showStatus = visibleColumns?.status ?? true;
   const showPublishDate = visibleColumns?.publishDate ?? true;
-  const showApproved = visibleColumns?.approved ?? true;
   const showPainPoint = visibleColumns?.painPoint ?? false;
   const showCta = visibleColumns?.cta ?? false;
   const showContentOutline = visibleColumns?.contentOutline ?? false;
@@ -148,57 +146,49 @@ export const ContentPlanTable: React.FC<ContentPlanTableProps> = ({
             {showFormat && (
               <th
                 scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.format")}
-            </th>
+                className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {t("table.columns.format")}
+              </th>
             )}
             {showStatus && (
               <th
                 scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.status")}
-            </th>
+                className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {t("table.columns.status")}
+              </th>
             )}
             {showPublishDate && (
               <th
                 scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.publishDate")}
-              </th>
-            )}
-            {showApproved && (
-              <th
-                scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.approved")}
+                className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {t("table.columns.publishDate")}
               </th>
             )}
             {showPainPoint && (
               <th
                 scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.painPoint")}
+                className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {t("table.columns.painPoint")}
               </th>
             )}
             {showCta && (
               <th
                 scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.cta")}
+                className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {t("table.columns.cta")}
               </th>
             )}
             {showContentOutline && (
               <th
                 scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.contentOutline")}
+                className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {t("table.columns.contentOutline")}
               </th>
             )}
             <th
@@ -216,9 +206,8 @@ export const ContentPlanTable: React.FC<ContentPlanTableProps> = ({
             return (
               <tr
                 key={item.id}
-                className={`hover:bg-gray-50 transition-colors ${
-                  onItemClick ? "cursor-pointer" : ""
-                }`}
+                className={`hover:bg-gray-50 transition-colors ${onItemClick ? "cursor-pointer" : ""
+                  }`}
                 onClick={() => onItemClick?.(item)}
               >
                 <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
@@ -259,17 +248,6 @@ export const ContentPlanTable: React.FC<ContentPlanTableProps> = ({
                 {showPublishDate && (
                   <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                     {formatPublishDate(item.publish_date)}
-                  </td>
-                )}
-                {showApproved && (
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    <input
-                      type="checkbox"
-                      checked={Boolean(item.is_approved)}
-                      disabled
-                      className="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                      aria-label={t("table.columns.approved")}
-                    />
                   </td>
                 )}
                 {showPainPoint && (
