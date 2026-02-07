@@ -1472,6 +1472,34 @@
       },
       {
         "hidden": false,
+        "id": "select1602912115",
+        "maxSelect": 1,
+        "name": "source",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "select",
+        "values": [
+          "manual",
+          "official"
+        ]
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "text18589324",
+        "max": 0,
+        "min": 0,
+        "name": "notes",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "hidden": false,
         "id": "autodate2990389176",
         "name": "created",
         "onCreate": true,

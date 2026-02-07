@@ -1,3 +1,4 @@
+import PocketBase from 'pocketbase';
 import {
   Generation,
   GenerationInput,
@@ -21,6 +22,12 @@ export interface DatabaseAdapter {
   updateItemStatus(itemId: string, status: ContentPlanStatus): Promise<ContentPlanItem>;
   updateItem(itemId: string, data: ContentPlanItemUpdate): Promise<ContentPlanItem>;
   deleteItem(itemId: string): Promise<void>;
+  // Health Calendar
+  getHealthCalendarEvents(): Promise<import('../types').HealthCalendarEvent[]>;
+  createHealthCalendarEvent(data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>): Promise<import('../types').HealthCalendarEvent>;
+  updateHealthCalendarEvent(id: string, data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>): Promise<import('../types').HealthCalendarEvent>;
+  deleteHealthCalendarEvent(id: string): Promise<void>;
+  getMonths(): Promise<import('../pocketbase-types').PBMonth[]>;
 }
 
 class PocketBaseAdapter implements DatabaseAdapter {
@@ -71,6 +78,26 @@ class PocketBaseAdapter implements DatabaseAdapter {
   async deleteItem(itemId: string): Promise<void> {
     return pocketbaseAccess.deleteItem(itemId);
   }
+
+  async getHealthCalendarEvents(): Promise<import('../types').HealthCalendarEvent[]> {
+    return pocketbaseAccess.getHealthCalendarEvents();
+  }
+
+  async createHealthCalendarEvent(data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>): Promise<import('../types').HealthCalendarEvent> {
+    return pocketbaseAccess.createHealthCalendarEvent(data);
+  }
+
+  async updateHealthCalendarEvent(id: string, data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>): Promise<import('../types').HealthCalendarEvent> {
+    return pocketbaseAccess.updateHealthCalendarEvent(id, data);
+  }
+
+  async deleteHealthCalendarEvent(id: string): Promise<void> {
+    return pocketbaseAccess.deleteHealthCalendarEvent(id);
+  }
+
+  async getMonths(): Promise<import('../pocketbase-types').PBMonth[]> {
+    return pocketbaseAccess.getAllMonths();
+  }
 }
 
 // Singleton adapter instance
@@ -87,8 +114,12 @@ export function getDatabaseAdapter(): DatabaseAdapter {
 // Convenience functions that use the adapter
 export async function createGeneration(
   data: GenerationInput,
-  items: ContentPlanItemInput[]
+  items: ContentPlanItemInput[],
+  client?: PocketBase
 ): Promise<GenerationWithItems> {
+  if (client) {
+    return pocketbaseAccess.createGeneration(data, items, client);
+  }
   return getDatabaseAdapter().createGeneration(data, items);
 }
 
@@ -131,6 +162,27 @@ export async function updateItem(
 
 export async function deleteItem(itemId: string): Promise<void> {
   return getDatabaseAdapter().deleteItem(itemId);
+}
+
+// Health Calendar convenience functions
+export async function getHealthCalendarEvents(): Promise<import('../types').HealthCalendarEvent[]> {
+  return getDatabaseAdapter().getHealthCalendarEvents();
+}
+
+export async function createHealthCalendarEvent(data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>): Promise<import('../types').HealthCalendarEvent> {
+  return getDatabaseAdapter().createHealthCalendarEvent(data);
+}
+
+export async function updateHealthCalendarEvent(id: string, data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>): Promise<import('../types').HealthCalendarEvent> {
+  return getDatabaseAdapter().updateHealthCalendarEvent(id, data);
+}
+
+export async function deleteHealthCalendarEvent(id: string): Promise<void> {
+  return getDatabaseAdapter().deleteHealthCalendarEvent(id);
+}
+
+export async function getMonths(): Promise<import('../pocketbase-types').PBMonth[]> {
+  return getDatabaseAdapter().getMonths();
 }
 
 // Alias for compatibility with some routes

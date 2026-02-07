@@ -1,7 +1,10 @@
+import PocketBase from 'pocketbase';
 import { getPocketBase, getPocketBaseUrl } from './pocketbase';
 import {
     PBGeneration,
     PBContentPlanItem,
+    PBHealthCalendarEvent,
+    PBMonth,
     COLLECTIONS,
 } from './pocketbase-types';
 import { MedicalContentFormData } from './types';
@@ -16,9 +19,10 @@ import { MedicalContentFormData } from './types';
  */
 export async function createGeneration(
     formData: MedicalContentFormData,
-    userId?: string
+    userId?: string,
+    client?: PocketBase
 ): Promise<PBGeneration> {
-    const pb = getPocketBase();
+    const pb = client || getPocketBase();
 
     const record = await pb.collection(COLLECTIONS.GENERATIONS).create<PBGeneration>({
         userId,
@@ -38,6 +42,31 @@ export async function createGeneration(
     });
 
     return record;
+}
+
+
+
+/**
+ * Batch create content plan items
+ */
+export async function batchCreateContentPlanItems(
+    generationId: string,
+    items: Array<Omit<PBContentPlanItem, keyof import('./pocketbase-types').PocketBaseRecord | 'generationId'>>,
+    client?: PocketBase
+): Promise<PBContentPlanItem[]> {
+    const pb = client || getPocketBase();
+
+    const promises = items.map(item =>
+        pb.collection(COLLECTIONS.CONTENT_PLAN_ITEMS).create<PBContentPlanItem>({
+            generationId,
+            ...item,
+        }).catch(err => {
+            console.error('Error creating item:', item.title, err.response || err);
+            throw err;
+        })
+    );
+
+    return await Promise.all(promises);
 }
 
 /**
@@ -157,24 +186,7 @@ export async function deleteContentPlanItem(id: string): Promise<boolean> {
     return await pb.collection(COLLECTIONS.CONTENT_PLAN_ITEMS).delete(id);
 }
 
-/**
- * Batch create content plan items
- */
-export async function batchCreateContentPlanItems(
-    generationId: string,
-    items: Array<Omit<PBContentPlanItem, keyof import('./pocketbase-types').PocketBaseRecord | 'generationId'>>
-): Promise<PBContentPlanItem[]> {
-    const pb = getPocketBase();
 
-    const promises = items.map(item =>
-        pb.collection(COLLECTIONS.CONTENT_PLAN_ITEMS).create<PBContentPlanItem>({
-            generationId,
-            ...item,
-        })
-    );
-
-    return await Promise.all(promises);
-}
 
 /**
  * Check PocketBase connection
@@ -190,6 +202,50 @@ export async function checkPocketBaseConnection(): Promise<boolean> {
         console.error('PocketBase connection error:', error);
         return false;
     }
+}
+
+/**
+ * Health Calendar Events methods
+ */
+
+export async function getHealthCalendarEvents(
+    page = 1,
+    perPage = 500
+): Promise<{ items: PBHealthCalendarEvent[]; totalItems: number }> {
+    const pb = getPocketBase();
+    const result = await pb.collection(COLLECTIONS.HEALTH_CALENDAR_EVENTS).getList<PBHealthCalendarEvent>(page, perPage, {
+        sort: 'monthId,date',
+    });
+    return {
+        items: result.items,
+        totalItems: result.totalItems,
+    };
+}
+
+export async function createHealthCalendarEvent(
+    data: Partial<PBHealthCalendarEvent>
+): Promise<PBHealthCalendarEvent> {
+    const pb = getPocketBase();
+    return await pb.collection(COLLECTIONS.HEALTH_CALENDAR_EVENTS).create<PBHealthCalendarEvent>(data);
+}
+
+export async function updateHealthCalendarEvent(
+    id: string,
+    data: Partial<PBHealthCalendarEvent>
+): Promise<PBHealthCalendarEvent> {
+    const pb = getPocketBase();
+    return await pb.collection(COLLECTIONS.HEALTH_CALENDAR_EVENTS).update<PBHealthCalendarEvent>(id, data);
+}
+
+export async function deleteHealthCalendarEvent(id: string): Promise<boolean> {
+    const pb = getPocketBase();
+    return await pb.collection(COLLECTIONS.HEALTH_CALENDAR_EVENTS).delete(id);
+}
+
+export async function getMonths(): Promise<import('./pocketbase-types').PBMonth[]> {
+    const pb = getPocketBase();
+    const result = await pb.collection(COLLECTIONS.MONTHS).getFullList<import('./pocketbase-types').PBMonth>();
+    return result;
 }
 
 // Re-export utility functions

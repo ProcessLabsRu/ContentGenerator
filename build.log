@@ -1,0 +1,278 @@
+
+> content-generator@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/12) ...
+
+Error occurred prerendering page "/api/llm/generate". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/llm/generate/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/api/generations/generate". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/generations/generate/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/api/health/llm". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/health/llm/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/api/health". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/health/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+   Generating static pages (3/12) 
+
+Error occurred prerendering page "/api/llm/generate-plan". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/llm/generate-plan/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/api/health/pocketbase". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/health/pocketbase/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+   Generating static pages (6/12) 
+
+Error occurred prerendering page "/api/generations". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/generations/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/page.js'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/load-components.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/utils.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/_not-found". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/_not-found/page.js'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/load-components.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/utils.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/api/llm/status". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/app/api/llm/status/route'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/node-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/future/helpers/module-loader/route-module-loader.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/routes/app-route.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/export/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+   Generating static pages (9/12) 
+
+Error occurred prerendering page "/500". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/pages/_document.js'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/load-components.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/utils.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+
+Error occurred prerendering page "/404". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: Cannot find module '/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/.next/server/pages/_document.js'
+Require stack:
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/load-components.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/utils.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/build/worker.js
+- /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/compiled/jest-worker/processChild.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1410:15)
+    at /Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1051:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1056:22)
+    at Module._load (node:internal/modules/cjs/loader:1219:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1493:12)
+    at mod.require (/Users/romangaleev/Documents/Antigravity/ContentGenerator-app/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+ ✓ Generating static pages (12/12)
+
+> Export encountered errors on following paths:
+	/_error: /404
+	/_error: /500
+	/_not-found/page: /_not-found
+	/api/generations/generate/route: /api/generations/generate
+	/api/generations/route: /api/generations
+	/api/health/llm/route: /api/health/llm
+	/api/health/pocketbase/route: /api/health/pocketbase
+	/api/health/route: /api/health
+	/api/llm/generate-plan/route: /api/llm/generate-plan
+	/api/llm/generate/route: /api/llm/generate
+	/api/llm/status/route: /api/llm/status
+	/page: /

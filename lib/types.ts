@@ -112,10 +112,21 @@ export interface MedicalContentFormData {
 
 // Health Calendar Event
 export interface HealthCalendarEvent {
+  id?: string;
   month: MonthOption;
-  specialization: MedicalSpecialization;
+  monthId?: string;
+  specialization?: MedicalSpecialization | null;
+  specializationId?: string;
   eventName: string;
   description: string;
+  date?: string;
+  year?: number;
+  color?: string;
+  isActive?: boolean;
+  source?: 'manual' | 'official';
+  notes?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 // Legacy types (keeping for backward compatibility)

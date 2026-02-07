@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createLLMClient } from '@/lib/llm';
 import { SYSTEM_PROMPT, generateUserPrompt } from '@/lib/llm/prompts';
 import { createGeneration } from '@/lib/db/adapter';
+import { normalizeLLMResponse } from '@/lib/llm/normalization';
+import { createAuthenticatedPocketBase } from '@/lib/pocketbase';
 import {
     MedicalContentFormData,
     GenerationInput,
@@ -27,13 +29,18 @@ export async function POST(request: NextRequest) {
         // 3. Генерация контента
         const response = await llmClient.generate(messages);
 
-        // 4. Парсинг ответа
+        // 4. Парсинг и нормализация ответа
         let items: ContentPlanItemInput[] = [];
         try {
             // Пытаемся очистить ответ от возможных markdown тегов, если LLM их добавила
             const jsonMatch = response.content.match(/\[[\s\S]*\]/);
             const jsonStr = jsonMatch ? jsonMatch[0] : response.content;
-            items = JSON.parse(jsonStr);
+            const rawItems = JSON.parse(jsonStr);
+            console.log(`[API Generate] Raw items from LLM: ${Array.isArray(rawItems) ? rawItems.length : 'not an array'}`);
+
+            // Нормализация данных (включая дату)
+            items = normalizeLLMResponse(rawItems, formData.month) as ContentPlanItemInput[];
+            console.log(`[API Generate] Normalized items: ${items.length}, first date: ${items[0]?.publish_date}`);
         } catch (parseError) {
             console.error('Failed to parse LLM response as JSON:', response.content);
             return NextResponse.json<ApiErrorResponse>({
@@ -44,7 +51,10 @@ export async function POST(request: NextRequest) {
             }, { status: 500 });
         }
 
-        // 5. Сохранение в базу данных
+        // 5. Сохранение в базу данных с авторизацией
+        const cookieHeader = request.headers.get('cookie') || '';
+        const pb = createAuthenticatedPocketBase(cookieHeader);
+
         const generationInput: GenerationInput = {
             title: formData.title,
             specialization: formData.specialization,
@@ -60,7 +70,7 @@ export async function POST(request: NextRequest) {
             }
         };
 
-        const result = await createGeneration(generationInput, items);
+        const result = await createGeneration(generationInput, items, pb);
 
         return NextResponse.json<ApiResponse<typeof result>>({
             data: result

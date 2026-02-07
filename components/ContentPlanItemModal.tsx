@@ -101,6 +101,7 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       title={t("modal.title")}
+      size="large"
     >
       <div className="space-y-4">
         {/* ... (form fields remain unchanged) */}
@@ -111,36 +112,38 @@ export const ContentPlanItemModal: React.FC<ContentPlanItemModalProps> = ({
             setFormState((prev) => ({ ...prev, title: e.target.value }))
           }
         />
-        <Select
-          label={t("modal.labels.format")}
-          options={formatOptions}
-          value={formState.format}
-          onValueChange={(value) =>
-            setFormState((prev) => ({ ...prev, format: value as any }))
-          }
-        />
-        <Select
-          label={t("modal.labels.status")}
-          options={statusOptions}
-          value={formState.status}
-          onValueChange={(value) =>
-            setFormState((prev) => ({
-              ...prev,
-              status: value as ContentPlanStatus,
-            }))
-          }
-        />
-        <Input
-          label={t("modal.labels.publishDate")}
-          type="date"
-          value={formState.publish_date}
-          onChange={(e) =>
-            setFormState((prev) => ({
-              ...prev,
-              publish_date: e.target.value,
-            }))
-          }
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <Select
+            label={t("modal.labels.format")}
+            options={formatOptions}
+            value={formState.format}
+            onValueChange={(value) =>
+              setFormState((prev) => ({ ...prev, format: value as any }))
+            }
+          />
+          <Select
+            label={t("modal.labels.status")}
+            options={statusOptions}
+            value={formState.status}
+            onValueChange={(value) =>
+              setFormState((prev) => ({
+                ...prev,
+                status: value as ContentPlanStatus,
+              }))
+            }
+          />
+          <Input
+            label={t("modal.labels.publishDate")}
+            type="date"
+            value={formState.publish_date}
+            onChange={(e) =>
+              setFormState((prev) => ({
+                ...prev,
+                publish_date: e.target.value,
+              }))
+            }
+          />
+        </div>
         <Textarea
           label={t("modal.labels.painPoint")}
           value={formState.pain_point}

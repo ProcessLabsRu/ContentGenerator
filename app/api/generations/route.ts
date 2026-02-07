@@ -1,3 +1,4 @@
+import { createAuthenticatedPocketBase } from '@/lib/pocketbase';
 import { NextRequest, NextResponse } from 'next/server';
 import {
   createGeneration,
@@ -72,7 +73,10 @@ export async function POST(request: NextRequest) {
       publish_date: item.publish_date || item.publishDate || null,
     }));
 
-    const created = await createGeneration(generationInput, itemsInput);
+    const cookieHeader = request.headers.get('cookie') || '';
+    const pb = createAuthenticatedPocketBase(cookieHeader);
+
+    const created = await createGeneration(generationInput, itemsInput, pb);
 
     return NextResponse.json<ApiResponse<typeof created>>(
       {

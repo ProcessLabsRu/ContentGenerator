@@ -63,4 +63,15 @@ export function getPocketBaseUrl(): string {
     return process.env.POCKETBASE_URL || process.env.NEXT_PUBLIC_POCKETBASE_URL || 'http://localhost:8090';
 }
 
+/**
+ * Create an authenticated PocketBase client from a cookie string
+ */
+export function createAuthenticatedPocketBase(cookieStr: string): PocketBase {
+    const url = getPocketBaseUrl();
+    const client = new PocketBase(url);
+    client.autoCancellation(false);
+    client.authStore.loadFromCookie(cookieStr);
+    return client;
+}
+
 export default getPocketBase;

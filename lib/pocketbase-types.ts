@@ -142,6 +142,8 @@ export interface PBHealthCalendarEvent extends PocketBaseRecord {
     date?: string;
     year: number;
     isActive: boolean;
+    source?: 'manual' | 'official';
+    notes?: string;
 }
 
 /**

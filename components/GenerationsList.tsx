@@ -4,8 +4,9 @@ import { useEffect, useState, MouseEvent as ReactMouseEvent } from "react";
 import { Generation } from "@/lib/types";
 import { fetchGenerations, deleteGeneration, isApiError } from "@/lib/api-client";
 import { useI18n } from "@/lib/i18n";
-import { Trash2 } from "lucide-react";
+import { Trash2, Info } from "lucide-react";
 import { ConfirmationModal } from "./ui/ConfirmationModal";
+import { GenerationDetailsModal } from "./GenerationDetailsModal";
 
 interface GenerationsListProps {
   selectedId?: string | null;
@@ -24,6 +25,7 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [detailsModalItem, setDetailsModalItem] = useState<Generation | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const { t, intlLocale } = useI18n();
 
@@ -144,9 +146,9 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
     <div className="space-y-2">
       <div
         onClick={() => onSelect({ id: 'all', title: t("generations.all") } as Generation)}
-        className={`p-4 border rounded-lg cursor-pointer transition-colors relative group ${selectedId === 'all'
-          ? "border-blue-500 bg-blue-50"
-          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+        className={`p-4 border rounded-lg cursor-pointer transition-all duration-200 relative group shadow-sm mb-4 ${selectedId === 'all'
+          ? "border-indigo-500 bg-indigo-50 ring-1 ring-indigo-500/10"
+          : "border-gray-200 bg-slate-50/50 hover:border-gray-300 hover:bg-slate-100/80"
           }`}
       >
         <div className="text-sm font-medium text-gray-900 uppercase">
@@ -163,14 +165,30 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
             : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
             }`}
         >
-          <button
-            onClick={(e) => handleDelete(e, generation.id)}
-            className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
-            title={t("ui.delete")}
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
-          <div className="text-sm font-medium text-gray-900 mb-1 pr-6 uppercase">
+          <div className="absolute top-2 right-2 flex items-center gap-0.5">
+            {/* Info Icon - Triggers Modal */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setDetailsModalItem(generation);
+              }}
+              className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors opacity-0 group-hover:opacity-100"
+              title={t("generations.details")}
+            >
+              <Info className="h-4 w-4" />
+            </button>
+
+            {/* Delete Icon */}
+            <button
+              onClick={(e) => handleDelete(e, generation.id)}
+              className="p-1.5 text-gray-400 hover:text-red-600 transition-colors opacity-0 group-hover:opacity-100"
+              title={t("ui.delete")}
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="text-sm font-medium text-gray-900 mb-1 pr-12 uppercase">
             {generation.title || `${generation.specialization} • ${generation.purpose}`}
           </div>
           <div className="text-xs text-gray-500 mb-2">
@@ -181,6 +199,12 @@ export const GenerationsList: React.FC<GenerationsListProps> = ({
           </div>
         </div>
       ))}
+
+      <GenerationDetailsModal
+        isOpen={Boolean(detailsModalItem)}
+        onClose={() => setDetailsModalItem(null)}
+        generation={detailsModalItem}
+      />
 
       <ConfirmationModal
         isOpen={Boolean(deleteConfirmId)}

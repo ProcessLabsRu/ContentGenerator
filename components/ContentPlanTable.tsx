@@ -191,12 +191,6 @@ export const ContentPlanTable: React.FC<ContentPlanTableProps> = ({
                 {t("table.columns.contentOutline")}
               </th>
             )}
-            <th
-              scope="col"
-              className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {t("table.columns.actions")}
-            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -271,16 +265,6 @@ export const ContentPlanTable: React.FC<ContentPlanTableProps> = ({
                     </div>
                   </td>
                 )}
-                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <button
-                    className="text-blue-600 hover:text-blue-900 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled
-                    title={t("table.actions.comingSoon")}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {t("table.actions.view")}
-                  </button>
-                </td>
               </tr>
             );
           })}

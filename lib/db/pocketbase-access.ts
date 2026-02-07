@@ -1,3 +1,4 @@
+import PocketBase from 'pocketbase';
 import {
     Generation,
     GenerationInput,
@@ -17,6 +18,11 @@ import {
     updateContentPlanItem,
     deleteContentPlanItem,
     batchCreateContentPlanItems,
+    getMonths,
+    getHealthCalendarEvents as pbGetHealthCalendarEvents,
+    createHealthCalendarEvent as pbCreateHealthCalendarEvent,
+    updateHealthCalendarEvent as pbUpdateHealthCalendarEvent,
+    deleteHealthCalendarEvent as pbDeleteHealthCalendarEvent,
 } from '../pocketbase-service';
 import { PBGeneration, PBContentPlanItem } from '../pocketbase-types';
 
@@ -30,7 +36,12 @@ function pbGenerationToGeneration(pbGen: PBGeneration): Generation {
         content_type: pbGen.contentType || '',
         number_of_publications: pbGen.numberOfPublications,
         context: pbGen.context || null,
-        metadata: pbGen.goals ? { goals: pbGen.goals } : {},
+        metadata: {
+            goals: pbGen.goals || [],
+            month: pbGen.month || '',
+            formatCounts: pbGen.formatCounts || {},
+            useHealthCalendar: pbGen.useHealthCalendar || false,
+        },
         created_at: pbGen.created,
         updated_at: pbGen.updated,
     };
@@ -55,7 +66,8 @@ function pbItemToItem(pbItem: PBContentPlanItem): ContentPlanItem {
 
 export async function createGeneration(
     data: GenerationInput,
-    items: ContentPlanItemInput[]
+    items: ContentPlanItemInput[],
+    client?: PocketBase
 ): Promise<GenerationWithItems> {
     // Создаем генерацию
     const pbGeneration = await pbCreateGeneration({
@@ -70,7 +82,7 @@ export async function createGeneration(
         formatCounts: (data.metadata as any)?.formatCounts || {},
         useHealthCalendar: !!(data.metadata as any)?.useHealthCalendar,
         additionalContext: data.context || '',
-    } as any);
+    } as any, undefined, client);
 
     // Создаем элементы контент-плана
     const pbItems = await batchCreateContentPlanItems(
@@ -83,7 +95,8 @@ export async function createGeneration(
             contentOutline: item.content_outline,
             cta: item.cta,
             publishDate: item.publish_date || undefined,
-        }))
+        })),
+        client
     );
 
     const generation = pbGenerationToGeneration(pbGeneration);
@@ -160,4 +173,61 @@ export async function updateItem(
 
 export async function deleteItem(itemId: string): Promise<void> {
     await deleteContentPlanItem(itemId);
+}
+
+// Health Calendar transformation and access
+
+function pbHealthEventToHealthEvent(
+    pbEvent: import('../pocketbase-types').PBHealthCalendarEvent,
+    months?: import('../pocketbase-types').PBMonth[]
+): import('../types').HealthCalendarEvent {
+    const month = months?.find(m => m.id === pbEvent.monthId)?.name as any || 'Janeiro';
+
+    return {
+        id: pbEvent.id,
+        month: month,
+        monthId: pbEvent.monthId,
+        eventName: pbEvent.eventName,
+        description: pbEvent.description,
+        date: pbEvent.date,
+        year: pbEvent.year,
+        color: pbEvent.color,
+        isActive: pbEvent.isActive,
+        specializationId: pbEvent.specializationId,
+        source: pbEvent.source,
+        notes: pbEvent.notes,
+        created_at: pbEvent.created,
+        updated_at: pbEvent.updated,
+    };
+}
+
+export async function getHealthCalendarEvents(): Promise<import('../types').HealthCalendarEvent[]> {
+    const months = await getMonths();
+    const result = await pbGetHealthCalendarEvents(1, 1000);
+    return result.items.map((e: import('../pocketbase-types').PBHealthCalendarEvent) => pbHealthEventToHealthEvent(e, months));
+}
+
+export async function createHealthCalendarEvent(
+    data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>
+): Promise<import('../types').HealthCalendarEvent> {
+    const pbEvent = await pbCreateHealthCalendarEvent(data);
+    const months = await getMonths();
+    return pbHealthEventToHealthEvent(pbEvent, months);
+}
+
+export async function updateHealthCalendarEvent(
+    id: string,
+    data: Partial<import('../pocketbase-types').PBHealthCalendarEvent>
+): Promise<import('../types').HealthCalendarEvent> {
+    const pbEvent = await pbUpdateHealthCalendarEvent(id, data);
+    const months = await getMonths();
+    return pbHealthEventToHealthEvent(pbEvent, months);
+}
+
+export async function deleteHealthCalendarEvent(id: string): Promise<void> {
+    await pbDeleteHealthCalendarEvent(id);
+}
+
+export async function getAllMonths(): Promise<import('../pocketbase-types').PBMonth[]> {
+    return getMonths();
 }
