@@ -58,45 +58,43 @@ const NavigationContent: React.FC = () => {
             </Link>
           </div>
 
-          {user && (
-            <>
-              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center bg-gray-100 p-1 rounded-lg gap-1">
-                <button
-                  onClick={() => setView('generations')}
-                  title={t("sidebar.generations")}
-                  className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium transition-all ${view === 'generations'
-                    ? "bg-white text-brand-red shadow-sm"
-                    : "text-gray-600 hover:text-brand-dark hover:bg-gray-200"
-                    }`}
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span className="hidden xl:inline">{t("sidebar.generations")}</span>
-                </button>
-                <button
-                  onClick={() => setView('calendar')}
-                  title={t("health.calendar.title")}
-                  className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium transition-all ${view === 'calendar'
-                    ? "bg-white text-brand-red shadow-sm"
-                    : "text-gray-600 hover:text-brand-dark hover:bg-gray-200"
-                    }`}
-                >
-                  <CalendarDays className="w-4 h-4" />
-                  <span className="hidden xl:inline">{t("health.calendar.title")}</span>
-                </button>
-              </div>
+          <div className="flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-4">
+              <ConnectionIndicator />
+              <LLMConnectionIndicator />
+            </div>
 
-              <div className="flex items-center">
-                <div className="flex items-center gap-4">
-                  <div className="hidden lg:flex items-center gap-4">
-                    <ConnectionIndicator />
-                    <LLMConnectionIndicator />
-                  </div>
-
-                  <UserMenu />
+            {user && (
+              <>
+                <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center bg-gray-100 p-1 rounded-lg gap-1">
+                  <button
+                    onClick={() => setView('generations')}
+                    title={t("sidebar.generations")}
+                    className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium transition-all ${view === 'generations'
+                      ? "bg-white text-brand-red shadow-sm"
+                      : "text-gray-600 hover:text-brand-dark hover:bg-gray-200"
+                      }`}
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    <span className="hidden xl:inline">{t("sidebar.generations")}</span>
+                  </button>
+                  <button
+                    onClick={() => setView('calendar')}
+                    title={t("health.calendar.title")}
+                    className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium transition-all ${view === 'calendar'
+                      ? "bg-white text-brand-red shadow-sm"
+                      : "text-gray-600 hover:text-brand-dark hover:bg-gray-200"
+                      }`}
+                  >
+                    <CalendarDays className="w-4 h-4" />
+                    <span className="hidden xl:inline">{t("health.calendar.title")}</span>
+                  </button>
                 </div>
-              </div>
-            </>
-          )}
+
+                <UserMenu />
+              </>
+            )}
+          </div>
         </div>
       </div>
     </nav>
