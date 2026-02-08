@@ -56,7 +56,6 @@ Details:
 - Specialization: ${data.specialization}
 - Goals: ${goalsList}
 - Target Audience Context: ${data.additionalContext || "General audience interested in this specialization"}
-- Total Publications: ${data.totalPublications}
 
 Format Distribution:
 ${formatDistribution}

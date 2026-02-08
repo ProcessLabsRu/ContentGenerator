@@ -281,17 +281,24 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
             newErrors.goals = t("medical.error.goalsRequired");
         }
 
+        const totalSelected = Object.values(formData.formatCounts).reduce((sum, val) => sum + val, 0);
+        if (totalSelected === 0) {
+            newErrors.formatCounts = "Selecione ao menos um formato ou use a distribuição automática";
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
     // Check if generate button should be enabled
     const isGenerateEnabled = (): boolean => {
+        const totalSelected = Object.values(formData.formatCounts).reduce((sum, val) => sum + val, 0);
         return !!(
             formData.title?.trim() &&
             formData.specialization &&
             formData.month &&
-            formData.goals.length > 0
+            formData.goals.length > 0 &&
+            totalSelected > 0
         );
     };
 
@@ -505,7 +512,7 @@ export const MedicalContentForm: React.FC<MedicalContentFormProps> = ({
                 <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <div className="flex-1">
                         <label className="block text-sm font-medium text-gray-700 font-bold mb-1">
-                            {t("medical.form.totalPublicationsLimit")}
+                            {t("medical.form.totalPublicationsLimit")} (Auto-distribute)
                         </label>
                         <p className="text-xs text-gray-500">
                             {t("medical.form.totalPublicationsLimitDesc")}

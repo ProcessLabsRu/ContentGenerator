@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Sparkles, Brain, Cpu, Bot } from 'lucide-react';
 
 type ConnectionStatus = 'checking' | 'connected' | 'error' | 'unknown';
 
@@ -8,16 +9,39 @@ interface LLMConnectionIndicatorProps {
     className?: string;
 }
 
+const ProviderIcon = ({ provider, status, className }: { provider: string, status: ConnectionStatus, className: string }) => {
+    const iconProps = {
+        className: `${className} transition-colors duration-300 ${status === 'checking' ? 'animate-pulse' : ''}`
+    };
+
+    switch (provider?.toLowerCase()) {
+        case 'openai':
+            return (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...iconProps}>
+                    <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" />
+                </svg>
+            );
+        case 'gemini':
+            return (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...iconProps}>
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z" />
+                    <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z" />
+                </svg>
+            );
+        case 'deepseek':
+            return <Cpu {...iconProps} />;
+        default:
+            return <Sparkles {...iconProps} />;
+    }
+};
+
 export function LLMConnectionIndicator({ className = '' }: LLMConnectionIndicatorProps) {
     const [status, setStatus] = useState<ConnectionStatus>('checking');
     const [provider, setProvider] = useState<string>('');
 
     useEffect(() => {
         checkConnection();
-
-        // Проверяем подключение каждые 30 секунд
         const interval = setInterval(checkConnection, 30000);
-
         return () => clearInterval(interval);
     }, []);
 
@@ -25,14 +49,8 @@ export function LLMConnectionIndicator({ className = '' }: LLMConnectionIndicato
         try {
             const response = await fetch('/api/health/llm');
             const data = await response.json();
-
             setProvider(data.provider || '');
-
-            if (data.status === 'ok') {
-                setStatus('connected');
-            } else {
-                setStatus('error');
-            }
+            setStatus(data.status === 'ok' ? 'connected' : 'error');
         } catch (error) {
             console.error('LLM connection check failed:', error);
             setStatus('error');
@@ -41,59 +59,28 @@ export function LLMConnectionIndicator({ className = '' }: LLMConnectionIndicato
 
     const getStatusColor = () => {
         switch (status) {
-            case 'checking':
-                return 'bg-yellow-500';
-            case 'connected':
-                return 'bg-green-500';
-            case 'error':
-                return 'bg-red-500';
-            default:
-                return 'bg-gray-400';
+            case 'checking': return 'text-yellow-400';
+            case 'connected': return 'text-green-400';
+            case 'error': return 'text-red-400';
+            default: return 'text-gray-400';
         }
     };
 
-    const getStatusText = () => {
-        switch (status) {
-            case 'checking':
-                return 'Conectando LLM...';
-            case 'error':
-                return 'Erro de conexão LLM';
-            default:
-                return '';
-        }
+    const getTooltipText = () => {
+        const name = provider ? provider.charAt(0).toUpperCase() + provider.slice(1) : 'LLM';
+        if (status === 'connected') return `${name}: Connected`;
+        if (status === 'checking') return `${name}: Connecting...`;
+        if (status === 'error') return `${name}: Connection Error`;
+        return name;
     };
 
-    const getTooltip = () => {
-        if (status === 'connected' && provider) {
-            return `LLM conectado (${provider})`;
-        }
-        return provider ? `LLM (${provider})` : 'LLM';
-    };
-
-    // При успешном подключении показываем только точку
-    if (status === 'connected') {
-        return (
-            <div
-                className={`flex items-center ${className}`}
-                title={getTooltip()}
-            >
-                <div className={`w-2.5 h-2.5 rounded-full ${getStatusColor()}`} />
-            </div>
-        );
-    }
-
-    // При ошибке или проверке показываем точку с текстом
     return (
-        <div
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 ${className}`}
-            title={getTooltip()}
-        >
-            <div className="flex items-center gap-2">
-                <div className={`w-2.5 h-2.5 rounded-full ${getStatusColor()} ${status === 'checking' ? 'animate-pulse' : ''}`} />
-                <span className="text-xs font-medium text-gray-700">
-                    {getStatusText()}
-                </span>
-            </div>
+        <div className={`flex items-center ${className}`} title={getTooltipText()}>
+            <ProviderIcon
+                provider={provider}
+                status={status}
+                className={`w-5 h-5 ${getStatusColor()}`}
+            />
         </div>
     );
 }
