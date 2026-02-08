@@ -1268,21 +1268,6 @@
       },
       {
         "hidden": false,
-        "id": "select2063623452",
-        "maxSelect": 1,
-        "name": "status",
-        "presentable": false,
-        "required": false,
-        "system": false,
-        "type": "select",
-        "values": [
-          "draft",
-          "generated",
-          "completed"
-        ]
-      },
-      {
-        "hidden": false,
         "id": "date1613626836",
         "max": "",
         "min": "",

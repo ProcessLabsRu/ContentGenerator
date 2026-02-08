@@ -37,9 +37,6 @@ export interface PBGeneration extends PocketBaseRecord {
     formatCounts?: Record<string, number>; // JSON object with format counts
     useHealthCalendar?: boolean;
 
-    // Status
-    status: 'Rascunho' | 'Gerado' | 'Aprovado';
-
     // Timestamps
     generatedAt?: string;
 }

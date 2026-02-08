@@ -28,7 +28,7 @@ import {
 import { PBGeneration, PBContentPlanItem } from '../pocketbase-types';
 
 // Вспомогательные функции для маппинга статусов
-function toTechnicalStatus(status: ContentPlanStatus, target: 'generation' | 'item'): string {
+function toTechnicalStatus(status: ContentPlanStatus): string {
     // В текущей БД технические статусы совпадают с португальскими строками
     return status;
 }
@@ -54,7 +54,6 @@ function pbGenerationToGeneration(pbGen: PBGeneration): Generation {
             formatCounts: pbGen.formatCounts || {},
             useHealthCalendar: pbGen.useHealthCalendar || false,
         },
-        status: toUIStatus(pbGen.status),
         created_at: pbGen.created,
         updated_at: pbGen.updated,
     };
@@ -103,7 +102,7 @@ export async function createGeneration(
         items.map(item => ({
             title: item.title,
             format: item.format,
-            status: toTechnicalStatus(item.status || 'Rascunho', 'item') as any,
+            status: toTechnicalStatus(item.status || 'Rascunho') as any,
             painPoint: item.pain_point,
             contentOutline: item.content_outline,
             cta: item.cta,
@@ -146,7 +145,6 @@ export async function updateGeneration(
         contentType: data.content_type,
         numberOfPublications: data.number_of_publications,
         context: data.context || undefined,
-        status: data.status ? (toTechnicalStatus(data.status, 'generation') as any) : undefined,
     });
 
     return pbGenerationToGeneration(pbGen);
@@ -172,7 +170,7 @@ export async function updateItemStatus(
     itemId: string,
     status: ContentPlanStatus
 ): Promise<ContentPlanItem> {
-    const pbItem = await updateContentPlanItem(itemId, { status: toTechnicalStatus(status, 'item') as any });
+    const pbItem = await updateContentPlanItem(itemId, { status: toTechnicalStatus(status) as any });
     return pbItemToItem(pbItem);
 }
 
@@ -183,7 +181,7 @@ export async function updateItem(
     const pbItem = await updateContentPlanItem(itemId, {
         title: data.title,
         format: data.format,
-        status: data.status ? (toTechnicalStatus(data.status, 'item') as any) : undefined,
+        status: data.status ? (toTechnicalStatus(data.status) as any) : undefined,
         painPoint: data.pain_point,
         contentOutline: data.content_outline,
         cta: data.cta,
