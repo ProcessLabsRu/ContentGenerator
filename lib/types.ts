@@ -173,6 +173,7 @@ export interface Generation {
   number_of_publications: number;
   context: string | null;
   metadata?: Record<string, unknown>;
+  status: ContentPlanStatus;
   items?: ContentPlanItem[]; // Optional: items can be loaded separately
 }
 
@@ -185,6 +186,7 @@ export interface GenerationInput {
   number_of_publications: number;
   context?: string | null;
   metadata?: Record<string, unknown>;
+  status?: ContentPlanStatus;
 }
 
 // Complete generation with items for API responses

@@ -9,7 +9,10 @@ export async function POST() {
     try {
         // 1. Fetch months to get IDs mapping
         const months = await getMonths();
-        const monthMap = new Map(months.map(m => [m.name, m.id]));
+        const findMonthId = (name: string) => {
+            const normalized = name.trim().toLowerCase();
+            return months.find(m => m.name.trim().toLowerCase() === normalized)?.id;
+        };
 
         // 2. Scrape data from MS website
         console.log('Starting health calendar sync...');
@@ -43,7 +46,7 @@ export async function POST() {
 
         // 5. Create new events
         for (const event of cleanedEvents) {
-            const monthId = monthMap.get(event.month);
+            const monthId = findMonthId(event.month);
             if (!monthId) {
                 console.warn(`Month not found: ${event.month}`);
                 continue;

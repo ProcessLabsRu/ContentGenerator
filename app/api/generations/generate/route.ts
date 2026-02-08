@@ -97,10 +97,28 @@ export async function POST(request: NextRequest) {
 
     } catch (error: any) {
         console.error('Content generation error:', error);
+
+        // Извлекаем детальную информацию об ошибке PocketBase, если она есть
+        const errorData = error.response?.data || error.data;
+        let errorMessage = error.message || 'Произошла ошибка при генерации контент-плана.';
+
+        if (errorData && typeof errorData === 'object') {
+            const details = Object.entries(errorData)
+                .map(([field, info]: [string, any]) => {
+                    const message = info.message || (typeof info === 'object' ? JSON.stringify(info) : String(info));
+                    return `${field}: ${message}`;
+                })
+                .join(', ');
+            if (details) {
+                errorMessage = `Error: ${details}`;
+            }
+        }
+
         return NextResponse.json<ApiErrorResponse>({
             error: {
-                message: error.message || 'Произошла ошибка при генерации контент-плана.',
-                code: 'GENERATION_ERROR'
+                message: errorMessage,
+                code: 'GENERATION_ERROR',
+                details: errorData
             }
         }, { status: 500 });
     }

@@ -14,9 +14,6 @@ import { MedicalContentFormData } from './types';
  * Provides methods for interacting with PocketBase collections
  */
 
-/**
- * Create a new generation record
- */
 export async function createGeneration(
     formData: MedicalContentFormData,
     userId?: string,
@@ -24,27 +21,36 @@ export async function createGeneration(
 ): Promise<PBGeneration> {
     const pb = client || getPocketBase();
 
-    const record = await pb.collection(COLLECTIONS.GENERATIONS).create<PBGeneration>({
-        userId,
-        title: (formData as any).title || formData.specialization || 'Content Plan',
-        specialization: formData.specialization,
-        month: formData.month,
-        goals: formData.goals,
-        formatCounts: formData.formatCounts,
-        useHealthCalendar: formData.useHealthCalendar,
-        context: formData.additionalContext,
-        numberOfPublications: (formData as any).numberOfPublications
-            ? Number((formData as any).numberOfPublications)
-            : (typeof formData.formatCounts === 'object' && formData.formatCounts !== null
-                ? Object.values(formData.formatCounts).reduce((sum, val) => sum + (Number(val) || 0), 0)
-                : 1),
-        status: 'Rascunho',
-    });
+    try {
+        const data = {
+            userId,
+            title: (formData as any).title || formData.specialization || 'Content Plan',
+            specialization: formData.specialization,
+            month: formData.month,
+            goals: formData.goals,
+            formatCounts: formData.formatCounts,
+            useHealthCalendar: formData.useHealthCalendar,
+            context: formData.additionalContext,
+            numberOfPublications: (formData as any).numberOfPublications
+                ? Number((formData as any).numberOfPublications)
+                : (typeof formData.formatCounts === 'object' && formData.formatCounts !== null
+                    ? Object.values(formData.formatCounts).reduce((sum, val) => sum + (Number(val) || 0), 0)
+                    : 1),
+            status: 'Rascunho',
+        };
 
-    return record;
+        const record = await pb.collection(COLLECTIONS.GENERATIONS).create<PBGeneration>(data);
+        return record;
+    } catch (error: any) {
+        console.error('PocketBase [Generations] Create Error:', {
+            url: error.url,
+            status: error.status,
+            data: error.response?.data || error.data,
+            message: error.message
+        });
+        throw error;
+    }
 }
-
-
 
 /**
  * Batch create content plan items
@@ -61,7 +67,11 @@ export async function batchCreateContentPlanItems(
             generationId,
             ...item,
         }).catch(err => {
-            console.error('Error creating item:', item.title, err.response || err);
+            console.error('Error creating item:', item.title, {
+                status: err.status,
+                data: err.response?.data || err.data,
+                message: err.message
+            });
             throw err;
         })
     );

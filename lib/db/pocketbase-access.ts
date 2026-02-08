@@ -27,6 +27,17 @@ import {
 } from '../pocketbase-service';
 import { PBGeneration, PBContentPlanItem } from '../pocketbase-types';
 
+// Вспомогательные функции для маппинга статусов
+function toTechnicalStatus(status: ContentPlanStatus, target: 'generation' | 'item'): string {
+    // В текущей БД технические статусы совпадают с португальскими строками
+    return status;
+}
+
+function toUIStatus(pbStatus: string): ContentPlanStatus {
+    // В текущей БД технические статусы совпадают с португальскими строками
+    return pbStatus as ContentPlanStatus;
+}
+
 // Преобразование PocketBase Generation в типы приложения
 function pbGenerationToGeneration(pbGen: PBGeneration): Generation {
     return {
@@ -43,6 +54,7 @@ function pbGenerationToGeneration(pbGen: PBGeneration): Generation {
             formatCounts: pbGen.formatCounts || {},
             useHealthCalendar: pbGen.useHealthCalendar || false,
         },
+        status: toUIStatus(pbGen.status),
         created_at: pbGen.created,
         updated_at: pbGen.updated,
     };
@@ -58,7 +70,7 @@ function pbItemToItem(pbItem: PBContentPlanItem): ContentPlanItem {
         pain_point: pbItem.painPoint || '',
         content_outline: pbItem.contentOutline || '',
         cta: pbItem.cta || '',
-        status: (pbItem.status || 'Rascunho') as ContentPlanStatus,
+        status: toUIStatus(pbItem.status),
         publish_date: pbItem.publishDate || null,
         created_at: pbItem.created,
         updated_at: pbItem.updated,
@@ -91,7 +103,7 @@ export async function createGeneration(
         items.map(item => ({
             title: item.title,
             format: item.format,
-            status: item.status as any,
+            status: toTechnicalStatus(item.status || 'Rascunho', 'item') as any,
             painPoint: item.pain_point,
             contentOutline: item.content_outline,
             cta: item.cta,
@@ -134,6 +146,7 @@ export async function updateGeneration(
         contentType: data.content_type,
         numberOfPublications: data.number_of_publications,
         context: data.context || undefined,
+        status: data.status ? (toTechnicalStatus(data.status, 'generation') as any) : undefined,
     });
 
     return pbGenerationToGeneration(pbGen);
@@ -159,7 +172,7 @@ export async function updateItemStatus(
     itemId: string,
     status: ContentPlanStatus
 ): Promise<ContentPlanItem> {
-    const pbItem = await updateContentPlanItem(itemId, { status: status as any });
+    const pbItem = await updateContentPlanItem(itemId, { status: toTechnicalStatus(status, 'item') as any });
     return pbItemToItem(pbItem);
 }
 
@@ -170,7 +183,7 @@ export async function updateItem(
     const pbItem = await updateContentPlanItem(itemId, {
         title: data.title,
         format: data.format,
-        status: data.status as any,
+        status: data.status ? (toTechnicalStatus(data.status, 'item') as any) : undefined,
         painPoint: data.pain_point,
         contentOutline: data.content_outline,
         cta: data.cta,
