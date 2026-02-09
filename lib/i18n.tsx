@@ -250,6 +250,7 @@ const translations = {
     // Health Calendar
     "health.calendar.title": "Calendário de Conscientização em Saúde",
     "health.calendar.sync": "Sincronizar MS",
+    "health.calendar.syncTooltip": "Carrega eventos do site do Ministério da Saúde",
     "health.calendar.syncTitle": "Sincronizar eventos oficiais",
     "health.calendar.syncConfirm": "Isso excluirá todos os eventos oficiais existentes e buscará os dados mais recentes. Eventos manuais não serão afetados. Continuar?",
     "health.calendar.confirmSync": "Sincronizar agora",

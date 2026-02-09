@@ -224,6 +224,7 @@ export const HealthCalendarView: React.FC<{ onBack: () => void }> = ({ onBack })
                         onClick={() => setIsSyncConfirmOpen(true)}
                         disabled={isSyncing}
                         className="flex items-center gap-2"
+                        title={t("health.calendar.syncTooltip")}
                     >
                         <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
                         {isSyncing ? t("health.calendar.syncing") : t("health.calendar.sync")}
