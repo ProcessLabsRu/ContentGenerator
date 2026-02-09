@@ -139,7 +139,7 @@ export const HealthCalendarEventModal: React.FC<HealthCalendarEventModalProps> =
                     label={t("health.calendar.eventName")}
                     value={formData.eventName}
                     onChange={(e) => setFormData(prev => ({ ...prev, eventName: e.target.value }))}
-                    placeholder="e.g. Outubro Rosa"
+                    placeholder={t("health.calendar.eventNamePlaceholder")}
                     required
                 />
 
@@ -170,6 +170,7 @@ export const HealthCalendarEventModal: React.FC<HealthCalendarEventModalProps> =
                         value={formData.monthId}
                         onValueChange={(val) => setFormData(prev => ({ ...prev, monthId: val }))}
                         className="h-[46px]"
+                        placeholder={t("ui.selectOption")}
                     />
                     {formData.type === 'day' ? (
                         <Input
@@ -203,7 +204,7 @@ export const HealthCalendarEventModal: React.FC<HealthCalendarEventModalProps> =
                     label={t("health.calendar.description")}
                     value={formData.description}
                     onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                    placeholder={isGenerating ? "AI Generating..." : "Short description of the importance..."}
+                    placeholder={isGenerating ? t("health.calendar.aiGenerating") : t("health.calendar.descriptionPlaceholder")}
                     rows={2}
                     disabled={isGenerating}
                 />

@@ -129,6 +129,7 @@ const translations = {
     "ui.closeModal": "Fechar modal",
     "ui.delete": "Excluir",
     "ui.confirm": "Confirmar",
+    "ui.selectOption": "Selecione uma opção",
     "generations.all": "Todas as Gerações",
 
     // Auth
@@ -279,6 +280,9 @@ const translations = {
     "health.calendar.type.day": "Data Específica",
     "health.calendar.type.month": "Campanha do Mês",
     "health.calendar.isRecurring": "Evento Recorrente (Anual)",
+    "health.calendar.eventNamePlaceholder": "Ex: Outubro Rosa",
+    "health.calendar.descriptionPlaceholder": "Breve descrição da importância...",
+    "health.calendar.aiGenerating": "IA Gerando...",
   },
 } as const;
 

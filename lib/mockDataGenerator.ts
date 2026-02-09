@@ -24,21 +24,21 @@ const generateTitle = (
   index: number
 ): string => {
   const templates = [
-    `10 ${specialization} ${purpose} Strategies for 2024`,
-    `How to Master ${purpose} in ${specialization}`,
-    `The Ultimate Guide to ${contentType} Content for ${specialization}`,
-    `${specialization} ${purpose}: Best Practices and Tips`,
-    `Transform Your ${specialization} Strategy with ${contentType} Content`,
-    `Why ${purpose} Matters for ${specialization} Businesses`,
-    `${specialization} ${contentType} Content That Converts`,
-    `The Future of ${purpose} in ${specialization}`,
-    `5 ${specialization} ${contentType} Ideas That Drive Results`,
-    `${purpose}: A ${specialization} Success Story`,
-    `Breaking Down ${purpose} Strategies for ${specialization}`,
-    `Essential ${contentType} Templates for ${specialization}`,
-    `${specialization} Trends: ${purpose} Edition`,
-    `From Idea to Impact: ${contentType} Content for ${specialization}`,
-    `Maximizing ${purpose} ROI in ${specialization}`,
+    `10 Estratégias de ${purpose} para ${specialization} em 2024`,
+    `Como Dominar ${purpose} em ${specialization}`,
+    `O Guia Definitivo de Conteúdo ${contentType} para ${specialization}`,
+    `${specialization} ${purpose}: Melhores Práticas e Dicas`,
+    `Transforme sua Estratégia de ${specialization} com Conteúdo ${contentType}`,
+    `Por que ${purpose} é Importante para Negócios de ${specialization}`,
+    `Conteúdo ${contentType} de ${specialization} que Converte`,
+    `O Futuro de ${purpose} em ${specialization}`,
+    `5 Ideias de Conteúdo ${contentType} para ${specialization} que Trazem Resultados`,
+    `${purpose}: Um Caso de Sucesso em ${specialization}`,
+    `Desmembrando Estratégias de ${purpose} para ${specialization}`,
+    `Modelos Essenciais de ${contentType} para ${specialization}`,
+    `Tendências em ${specialization}: Edição ${purpose}`,
+    `Da Ideia ao Impacto: Conteúdo ${contentType} para ${specialization}`,
+    `Maximizando o ROI de ${purpose} em ${specialization}`,
   ];
 
   return templates[index % templates.length];
@@ -51,53 +51,53 @@ const generatePainPoint = (
   const painPoints: Record<string, Record<string, string[]>> = {
     "Lead Generation": {
       "Digital Marketing": [
-        "Struggling to attract qualified leads that convert",
-        "Low conversion rates from traffic to leads",
-        "Difficulty identifying ideal customer profiles",
+        "Dificuldade em atrair leads qualificados que convertem",
+        "Baixas taxas de conversão de tráfego para leads",
+        "Dificuldade em identificar o perfil de cliente ideal",
       ],
       SaaS: [
-        "Long sales cycles preventing consistent lead flow",
-        "High customer acquisition costs",
-        "Challenges in demonstrating product value quickly",
+        "Ciclos de vendas longos impedindo fluxo consistente de leads",
+        "Custos de aquisição de clientes altos",
+        "Desafios em demonstrar valor do produto rapidamente",
       ],
       "E-commerce": [
-        "Cart abandonment rates affecting revenue",
-        "Difficulty in personalizing shopping experiences",
-        "Competition from larger marketplaces",
+        "Taxas de abandono de carrinho afetando receita",
+        "Dificuldade na personalização de experiências de compra",
+        "Concorrência com grandes marketplaces",
       ],
     },
     "Brand Awareness": {
       "Digital Marketing": [
-        "Limited visibility in a crowded market",
-        "Difficulty standing out from competitors",
-        "Low brand recognition among target audience",
+        "Visibilidade limitada em um mercado saturado",
+        "Dificuldade em se destacar da concorrência",
+        "Baixo reconhecimento de marca entre o público-alvo",
       ],
       SaaS: [
-        "Technical complexity makes brand messaging unclear",
-        "Competing with established players for attention",
-        "Educating market about new category",
+        "Complexidade técnica torna a mensagem da marca pouco clara",
+        "Competindo com players estabelecidos por atenção",
+        "Educando o mercado sobre nova categoria",
       ],
       "E-commerce": [
-        "Building trust with new customers",
-        "Establishing brand identity in saturated markets",
-        "Creating memorable brand experiences online",
+        "Construindo confiança com novos clientes",
+        "Estabelecendo identidade de marca em mercados saturados",
+        "Criando experiências de marca memoráveis online",
       ],
     },
     "Thought Leadership": {
       "Digital Marketing": [
-        "Establishing credibility in fast-evolving industry",
-        "Generating original insights that resonate",
-        "Building authority among industry peers",
+        "Estabelecendo credibilidade em indústria de rápida evolução",
+        "Gerando insights originais que ressoam",
+        "Construindo autoridade entre pares da indústria",
       ],
       SaaS: [
-        "Positioning as innovation leader",
-        "Translating technical expertise into accessible insights",
-        "Shaping industry conversations",
+        "Posicionando-se como líder em inovação",
+        "Traduzindo expertise técnica em insights acessíveis",
+        "Moldando conversas da indústria",
       ],
       Healthcare: [
-        "Communicating complex medical information clearly",
-        "Building trust with patients and professionals",
-        "Navigating regulatory constraints in messaging",
+        "Comunicando informações médicas complexas claramente",
+        "Construindo confiança com pacientes e profissionais",
+        "Navegando restrições regulatórias na comunicação",
       ],
     },
   };
@@ -105,15 +105,15 @@ const generatePainPoint = (
   const specializationPainPoints =
     painPoints[purpose]?.[specialization] ||
     painPoints[purpose]?.["Digital Marketing"] || [
-      `Challenges in achieving ${purpose.toLowerCase()} goals`,
-      `Difficulty measuring ${purpose.toLowerCase()} effectiveness`,
-      `Standing out in competitive ${specialization.toLowerCase()} landscape`,
+      `Desafios em alcançar objetivos de ${purpose.toLowerCase()}`,
+      `Dificuldade em medir a eficácia de ${purpose.toLowerCase()}`,
+      `Destacar-se no cenário competitivo de ${specialization.toLowerCase()}`,
     ];
 
   return (
     specializationPainPoints[
     Math.floor(Math.random() * specializationPainPoints.length)
-    ] || `Key challenges in ${specialization} for ${purpose}`
+    ] || `Principais desafios em ${specialization} para ${purpose}`
   );
 };
 
@@ -123,11 +123,11 @@ const generateOutline = (
   contentType: string
 ): string => {
   const outlines = [
-    `Introduction to ${purpose} in ${specialization} • Key principles and frameworks • Real-world examples and case studies • Best practices and actionable tips • Common pitfalls to avoid • Future trends and opportunities`,
-    `Understanding the ${specialization} landscape • Why ${purpose} matters now • Step-by-step implementation guide • Tools and resources needed • Measuring success and KPIs • Next steps for your strategy`,
-    `The problem: Current challenges in ${specialization} • The solution: ${contentType} approach • Implementation strategies • Success metrics • Case studies and examples • Getting started checklist`,
-    `Overview of ${purpose} strategies • ${specialization}-specific considerations • Content creation framework • Distribution channels • Engagement tactics • ROI measurement`,
-    `Defining your ${purpose} objectives • ${specialization} audience analysis • Content planning and calendar • Execution framework • Optimization techniques • Scaling your efforts`,
+    `Introdução a ${purpose} em ${specialization} • Princípios chave e frameworks • Exemplos reais e estudos de caso • Melhores práticas e dicas acionáveis • Erros comuns a evitar • Tendências futuras e oportunidades`,
+    `Entendendo o cenário de ${specialization} • Por que ${purpose} importa agora • Guia de implementação passo a passo • Ferramentas e recursos necessários • Medindo sucesso e KPIs • Próximos passos para sua estratégia`,
+    `O problema: Desafios atuais em ${specialization} • A solução: Abordagem ${contentType} • Estratégias de implementação • Métricas de sucesso • Estudos de caso e exemplos • Checklist para começar`,
+    `Visão geral de estratégias de ${purpose} • Considerações específicas de ${specialization} • Framework de criação de conteúdo • Canais de distribuição • Táticas de engajamento • Medição de ROI`,
+    `Definindo seus objetivos de ${purpose} • Análise de audiência de ${specialization} • Planejamento e calendário de conteúdo • Framework de execução • Técnicas de otimização • Escalando seus esforços`,
   ];
 
   return outlines[Math.floor(Math.random() * outlines.length)];
@@ -136,41 +136,41 @@ const generateOutline = (
 const generateCTA = (purpose: string, contentType: string): string => {
   const ctas: Record<string, string[]> = {
     "Lead Generation": [
-      "Download our free guide to get started",
-      "Book a consultation to discuss your strategy",
-      "Try our tool free for 14 days",
-      "Get your personalized content plan",
-      "Schedule a demo to see how it works",
+      "Baixe nosso guia gratuito para começar",
+      "Agende uma consultoria para discutir sua estratégia",
+      "Teste nossa ferramenta gratuitamente por 14 dias",
+      "Receba seu plano de conteúdo personalizado",
+      "Agende uma demonstração para ver como funciona",
     ],
     "Brand Awareness": [
-      "Follow us for more insights",
-      "Join our community of innovators",
-      "Subscribe to our newsletter",
-      "Share this with your network",
-      "Explore more resources",
+      "Siga-nos para mais insights",
+      "Junte-se à nossa comunidade de inovadores",
+      "Inscreva-se em nossa newsletter",
+      "Compartilhe com sua rede",
+      "Explore mais recursos",
     ],
     "Thought Leadership": [
-      "Connect with us on LinkedIn",
-      "Download the full research report",
-      "Join our upcoming webinar",
-      "Read our latest industry analysis",
-      "Get in touch to collaborate",
+      "Conecte-se conosco no LinkedIn",
+      "Baixe o relatório de pesquisa completo",
+      "Participe do nosso próximo webinar",
+      "Leia nossa última análise da indústria",
+      "Entre em contato para colaborar",
     ],
     "Customer Education": [
-      "Access our resource library",
-      "Enroll in our free course",
-      "Watch our tutorial series",
-      "Download the complete guide",
-      "Join our learning community",
+      "Acesse nossa biblioteca de recursos",
+      "Inscreva-se em nosso curso gratuito",
+      "Assista à nossa série de tutoriais",
+      "Baixe o guia completo",
+      "Junte-se à nossa comunidade de aprendizado",
     ],
   };
 
   const purposeCTAs =
     ctas[purpose] || [
-      "Learn more about our solutions",
-      "Get started today",
-      "Contact us for more information",
-      "Explore our resources",
+      "Saiba mais sobre nossas soluções",
+      "Comece hoje mesmo",
+      "Entre em contato para mais informações",
+      "Explore nossos recursos",
     ];
 
   return purposeCTAs[Math.floor(Math.random() * purposeCTAs.length)];

@@ -15,6 +15,7 @@ interface SelectProps
   error?: string;
   value: string;
   onValueChange?: (value: string) => void;
+  placeholder?: string;
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -26,6 +27,7 @@ export const Select: React.FC<SelectProps> = ({
   value,
   onValueChange,
   onChange,
+  placeholder = "Select an option",
   ...props
 }) => {
   const selectId = id || `select-${label.toLowerCase().replace(/\s+/g, "-")}`;
@@ -51,12 +53,11 @@ export const Select: React.FC<SelectProps> = ({
         id={selectId}
         value={value}
         onChange={handleChange}
-        className={`w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white ${
-          error ? "border-red-500" : ""
-        } ${className}`}
+        className={`w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white ${error ? "border-red-500" : ""
+          } ${className}`}
         {...props}
       >
-        <option value="">Select an option</option>
+        <option value="">{placeholder}</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
